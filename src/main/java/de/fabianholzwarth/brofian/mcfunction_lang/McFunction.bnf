@@ -1,0 +1,20 @@
+{
+  parserClass="de.fabianholzwarth.brofian.mcfunction_lang.parser.McFunctionParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="McFunction"
+  psiImplClassSuffix="Impl"
+  psiPackage="de.fabianholzwarth.brofian.mcfunction_lang.psi"
+  psiImplPackage="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl"
+
+  elementTypeHolderClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes"
+  elementTypeClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionElementType"
+  tokenTypeClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTokenType"
+}
+
+mcFunctionFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
