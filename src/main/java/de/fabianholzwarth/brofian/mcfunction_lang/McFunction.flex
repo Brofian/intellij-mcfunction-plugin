@@ -4,6 +4,7 @@ package de.fabianholzwarth.brofian.mcfunction_lang;
 import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.psi.TokenType;
+import de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes;
 
 %%
 

@@ -22,6 +22,8 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
 
+    <depends>com.intellij.java</depends>
+
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
@@ -44,6 +46,23 @@
 
         <colorSettingsPage
                 implementation="de.fabianholzwarth.brofian.mcfunction_lang.McFunctionColorSettingsPage"/>
+
+
+        <completion.contributor
+                language="McFunction"
+                implementationClass="de.fabianholzwarth.brofian.mcfunction_lang.McFunctionCompletionContributor"/>
+
+        <lang.refactoringSupport
+                language="McFunction"
+                implementationClass="de.fabianholzwarth.brofian.mcfunction_lang.McFunctionRefactoringSupportProvider"/>
+
+        <lang.findUsagesProvider
+                language="McFunction"
+                implementationClass="de.fabianholzwarth.brofian.mcfunction_lang.McFunctionFindUsagesProvider"/>
+
+        <lang.commenter
+                language="McFunction"
+                implementationClass="de.fabianholzwarth.brofian.mcfunction_lang.McFunctionCommenter"/>
 
     </extensions>
 </idea-plugin>

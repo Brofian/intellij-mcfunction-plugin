@@ -5,6 +5,16 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface McFunctionProperty extends PsiElement {
+public interface McFunctionProperty extends McFunctionNamedElement {
+
+  String getKey();
+
+  String getValue();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
 
 }

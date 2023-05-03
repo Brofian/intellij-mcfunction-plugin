@@ -15,7 +15,6 @@ public interface McFunctionTypes {
   IElementType KEY = new McFunctionTokenType("KEY");
   IElementType SEPARATOR = new McFunctionTokenType("SEPARATOR");
   IElementType VALUE = new McFunctionTokenType("VALUE");
-  IElementType BAD_CHARACTER = new McFunctionTokenType("BAD_CHARACTER");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

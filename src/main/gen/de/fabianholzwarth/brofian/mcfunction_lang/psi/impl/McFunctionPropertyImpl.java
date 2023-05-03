@@ -8,10 +8,9 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionPropertyImpl extends ASTWrapperPsiElement implements McFunctionProperty {
+public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implements McFunctionProperty {
 
   public McFunctionPropertyImpl(@NotNull ASTNode node) {
     super(node);
@@ -25,6 +24,31 @@ public class McFunctionPropertyImpl extends ASTWrapperPsiElement implements McFu
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof McFunctionVisitor) accept((McFunctionVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  public String getKey() {
+    return McFunctionPsiImplUtil.getKey(this);
+  }
+
+  @Override
+  public String getValue() {
+    return McFunctionPsiImplUtil.getValue(this);
+  }
+
+  @Override
+  public String getName() {
+    return McFunctionPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return McFunctionPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return McFunctionPsiImplUtil.getNameIdentifier(this);
   }
 
 }

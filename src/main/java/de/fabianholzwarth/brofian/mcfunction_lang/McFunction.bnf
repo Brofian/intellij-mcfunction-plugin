@@ -11,10 +11,16 @@
   elementTypeHolderClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes"
   elementTypeClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionElementType"
   tokenTypeClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTokenType"
+
+  psiImplUtilClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionPsiImplUtil"
 }
 
 mcFunctionFile ::= item_*
 
 private item_ ::= (property|COMMENT|CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+property ::= (KEY? SEPARATOR VALUE?) | KEY {
+  mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
+  implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
+  methods=[getKey getValue getName setName getNameIdentifier]
+}
