@@ -10,7 +10,7 @@ import de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes;
 public class McFunctionPsiImplUtil {
 
     public static String getKey(McFunctionProperty element) {
-        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.KEY);
+        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.IDENTIFIER);
         if (keyNode != null) {
             // IMPORTANT: Convert embedded escaped spaces to McFunction spaces
             return keyNode.getText().replaceAll("\\\\ ", " ");
@@ -20,7 +20,7 @@ public class McFunctionPsiImplUtil {
     }
 
     public static String getValue(McFunctionProperty element) {
-        ASTNode valueNode = element.getNode().findChildByType(McFunctionTypes.VALUE);
+        ASTNode valueNode = element.getNode().findChildByType(McFunctionTypes.SELECTOR);
         if (valueNode != null) {
             return valueNode.getText();
         } else {
@@ -33,7 +33,7 @@ public class McFunctionPsiImplUtil {
     }
 
     public static PsiElement setName(McFunctionProperty element, String newName) {
-        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.KEY);
+        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.IDENTIFIER);
         if (keyNode != null) {
             McFunctionProperty property =
                     McFunctionElementFactory.createProperty(element.getProject(), newName);
@@ -44,7 +44,7 @@ public class McFunctionPsiImplUtil {
     }
 
     public static PsiElement getNameIdentifier(McFunctionProperty element) {
-        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.KEY);
+        ASTNode keyNode = element.getNode().findChildByType(McFunctionTypes.IDENTIFIER);
         return keyNode != null ? keyNode.getPsi() : null;
     }
     

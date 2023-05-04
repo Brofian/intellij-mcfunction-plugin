@@ -38,7 +38,14 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_CMAP_TOP = zzUnpackcmap_top();
 
   private static final String ZZ_CMAP_TOP_PACKED_0 =
-    "\1\0\37\u0100\1\u0200\267\u0100\10\u0300\u1020\u0100";
+    "\1\0\5\u0100\1\u0200\1\u0300\1\u0100\5\u0400\1\u0500\1\u0600"+
+    "\1\u0700\6\u0100\1\u0800\1\u0900\1\u0a00\1\u0b00\1\u0c00\1\u0d00"+
+    "\3\u0100\1\u0e00\205\u0100\1\u0600\1\u0100\1\u0f00\1\u1000\1\u1100"+
+    "\1\u1200\54\u0100\10\u1300\37\u0100\1\u0900\4\u0100\1\u1400\10\u0100"+
+    "\1\u1500\2\u0100\1\u1600\1\u1700\1\u1200\1\u0100\1\u0500\1\u0100"+
+    "\1\u1800\1\u1500\1\u0800\3\u0100\1\u1100\1\u1900\114\u0100\1\u1a00"+
+    "\1\u1100\153\u0100\1\u1b00\11\u0100\1\u1c00\1\u1200\6\u0100\1\u1100"+
+    "\u0f16\u0100";
 
   private static int [] zzUnpackcmap_top() {
     int [] result = new int[4352];
@@ -66,12 +73,27 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_CMAP_BLOCKS = zzUnpackcmap_blocks();
 
   private static final String ZZ_CMAP_BLOCKS_PACKED_0 =
-    "\11\0\1\1\1\2\1\3\1\4\1\5\22\0\1\6"+
-    "\2\0\1\7\26\0\1\10\2\0\1\10\36\0\1\11"+
-    "\50\0\1\3\u01a2\0\2\3\326\0\u0100\12";
+    "\11\0\1\1\1\2\1\3\1\4\1\5\22\0\1\1"+
+    "\2\0\1\6\1\0\1\7\4\0\2\7\1\10\1\11"+
+    "\1\12\1\7\12\13\1\14\1\0\1\15\1\16\1\15"+
+    "\1\0\1\17\32\20\1\21\1\0\1\22\1\23\1\20"+
+    "\1\0\1\24\1\25\1\26\1\27\1\30\1\31\2\20"+
+    "\1\32\1\20\1\33\1\34\2\20\1\35\1\36\1\20"+
+    "\1\37\1\40\1\41\4\20\1\42\1\20\3\0\1\23"+
+    "\6\0\1\3\u01da\0\12\43\206\0\12\43\306\0\12\43"+
+    "\234\0\12\43\166\0\12\43\140\0\12\43\166\0\12\43"+
+    "\106\0\12\43\u0116\0\12\43\106\0\12\43\u0146\0\12\43"+
+    "\46\0\12\43\u012c\0\12\43\200\0\12\43\246\0\12\43"+
+    "\6\0\12\43\266\0\12\43\126\0\12\43\206\0\12\43"+
+    "\6\0\12\43\316\0\2\3\u01a6\0\12\43\46\0\12\43"+
+    "\306\0\12\43\26\0\12\43\126\0\12\43\u0196\0\12\43"+
+    "\6\0\u0100\44\240\0\12\43\206\0\12\43\u012c\0\12\43"+
+    "\200\0\12\43\74\0\12\43\220\0\12\43\166\0\12\43"+
+    "\146\0\12\43\206\0\12\43\106\0\12\43\266\0\12\43"+
+    "\u0164\0\62\43\100\0\12\43\266\0";
 
   private static int [] zzUnpackcmap_blocks() {
-    int [] result = new int[1024];
+    int [] result = new int[7424];
     int offset = 0;
     offset = zzUnpackcmap_blocks(ZZ_CMAP_BLOCKS_PACKED_0, offset, result);
     return result;
@@ -95,12 +117,13 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\2\0\1\1\1\2\1\1\1\3\1\4\1\5\1\6"+
-    "\2\7\1\6\1\7\1\5\1\0\2\3\1\0\1\6"+
-    "\1\2\1\6";
+    "\2\0\1\1\1\2\1\3\1\4\1\1\1\5\1\6"+
+    "\1\7\1\1\1\5\1\6\2\5\1\6\2\10\1\7"+
+    "\1\0\2\6\1\5\1\0\4\5\1\11\2\0\1\5"+
+    "\1\12\2\5\1\6\13\5";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[21];
+    int [] result = new int[47];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -125,12 +148,15 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\13\0\26\0\41\0\54\0\67\0\102\0\115"+
-    "\0\130\0\143\0\41\0\156\0\171\0\204\0\115\0\217"+
-    "\0\232\0\245\0\260\0\156\0\273";
+    "\0\0\0\45\0\112\0\157\0\157\0\224\0\271\0\336"+
+    "\0\u0103\0\271\0\u0128\0\u014d\0\u0172\0\u0197\0\u01bc\0\u01e1"+
+    "\0\u0206\0\157\0\112\0\u022b\0\u0250\0\u0275\0\u029a\0\u02bf"+
+    "\0\u02e4\0\u0309\0\u032e\0\u0353\0\u022b\0\u0378\0\u039d\0\u03c2"+
+    "\0\u014d\0\u03e7\0\u040c\0\112\0\u039d\0\u0431\0\u0456\0\u047b"+
+    "\0\u04a0\0\u04c5\0\u04ea\0\u050f\0\u0534\0\u0559\0\u057e";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[21];
+    int [] result = new int[47];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -153,24 +179,53 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpacktrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\3\2\4\1\5\1\4\1\5\1\4\1\6\1\7"+
-    "\1\10\1\3\1\11\1\12\1\13\1\14\1\13\1\14"+
-    "\1\15\2\11\1\16\1\11\1\3\2\0\1\3\1\0"+
-    "\1\3\1\0\1\3\1\0\1\17\1\3\1\0\6\4"+
-    "\4\0\1\3\2\4\1\5\1\4\1\5\1\4\1\3"+
-    "\1\0\1\17\1\3\1\6\1\20\1\0\1\6\1\20"+
-    "\1\3\1\20\1\6\1\20\1\21\1\6\21\0\1\3"+
-    "\4\0\2\11\1\0\1\11\1\0\4\11\1\22\2\11"+
-    "\1\12\1\15\1\23\1\15\1\23\1\12\2\11\1\22"+
-    "\2\11\1\24\1\4\1\24\1\4\2\24\2\11\1\22"+
-    "\1\11\1\0\2\15\1\4\1\15\1\4\1\15\4\0"+
-    "\2\11\4\0\4\11\1\0\2\20\1\0\2\20\1\0"+
-    "\7\20\1\0\2\20\1\0\1\6\4\20\5\11\1\25"+
-    "\4\11\1\0\1\11\1\23\1\4\1\23\1\4\2\23"+
-    "\2\11\1\22\5\11\1\0\4\11\1\22\1\11";
+    "\1\3\2\4\1\5\1\4\1\5\1\6\1\7\1\3"+
+    "\1\10\1\3\1\11\1\3\1\12\1\3\1\13\1\14"+
+    "\2\3\1\15\5\14\1\16\6\14\1\17\2\14\1\20"+
+    "\2\3\1\21\1\22\1\5\1\22\1\5\37\3\46\0"+
+    "\5\5\37\0\2\6\1\0\2\6\1\0\37\6\16\0"+
+    "\1\23\37\0\1\14\1\0\1\11\1\24\1\0\1\23"+
+    "\1\0\1\14\3\0\17\14\1\20\12\0\1\14\1\0"+
+    "\1\25\1\24\3\0\1\14\3\0\17\14\1\26\11\0"+
+    "\1\27\13\0\1\27\3\0\1\27\5\0\3\27\15\0"+
+    "\1\14\1\0\1\14\1\24\3\0\1\14\3\0\17\14"+
+    "\13\0\1\30\1\0\1\26\27\0\1\26\12\0\1\14"+
+    "\1\0\1\14\1\24\3\0\1\14\3\0\6\14\1\31"+
+    "\10\14\13\0\1\14\1\0\1\14\1\24\3\0\1\14"+
+    "\3\0\1\32\1\14\1\33\1\14\1\34\12\14\15\0"+
+    "\1\26\27\0\1\26\2\0\2\21\1\5\1\21\1\5"+
+    "\50\0\1\35\1\0\1\35\4\0\1\35\3\0\17\35"+
+    "\13\0\1\14\1\36\1\25\1\24\3\0\1\14\3\0"+
+    "\17\14\1\26\13\0\1\36\1\26\27\0\1\26\22\0"+
+    "\1\37\36\0\1\20\27\0\1\20\12\0\1\14\1\0"+
+    "\1\14\1\24\3\0\1\14\3\0\10\14\1\40\6\14"+
+    "\13\0\1\14\1\0\1\14\1\24\3\0\1\14\3\0"+
+    "\16\14\1\41\13\0\1\14\1\0\1\14\1\24\3\0"+
+    "\1\14\3\0\11\14\1\42\5\14\13\0\1\14\1\0"+
+    "\1\14\1\24\3\0\1\14\3\0\15\14\1\43\1\14"+
+    "\15\0\1\44\27\0\1\44\1\0\2\37\4\0\14\37"+
+    "\1\45\21\37\12\0\1\14\1\0\1\14\1\24\3\0"+
+    "\1\14\3\0\10\14\1\41\6\14\13\0\1\14\1\0"+
+    "\1\14\1\24\3\0\1\14\3\0\13\14\1\46\3\14"+
+    "\13\0\1\14\1\0\1\14\1\24\3\0\1\14\3\0"+
+    "\1\14\1\47\15\14\13\0\1\14\1\0\1\14\1\24"+
+    "\3\0\1\14\3\0\4\14\1\50\12\14\13\0\1\14"+
+    "\1\0\1\14\1\24\3\0\1\14\3\0\10\14\1\51"+
+    "\6\14\13\0\1\14\1\0\1\14\1\24\3\0\1\14"+
+    "\3\0\1\14\1\52\15\14\13\0\1\14\1\0\1\14"+
+    "\1\24\3\0\1\14\3\0\11\14\1\53\5\14\13\0"+
+    "\1\14\1\0\1\14\1\24\3\0\1\14\3\0\11\14"+
+    "\1\54\5\14\13\0\1\14\1\0\1\14\1\24\3\0"+
+    "\1\14\3\0\2\14\1\55\14\14\13\0\1\14\1\0"+
+    "\1\14\1\24\3\0\1\14\3\0\1\56\16\14\13\0"+
+    "\1\14\1\0\1\14\1\24\3\0\1\14\3\0\7\14"+
+    "\1\41\7\14\13\0\1\14\1\0\1\14\1\24\3\0"+
+    "\1\14\3\0\13\14\1\57\3\14\13\0\1\14\1\0"+
+    "\1\14\1\24\3\0\1\14\3\0\3\14\1\41\13\14"+
+    "\2\0";
 
   private static int [] zzUnpacktrans() {
-    int [] result = new int[198];
+    int [] result = new int[1443];
     int offset = 0;
     offset = zzUnpacktrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -208,10 +263,11 @@ class McFunctionLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\2\0\4\1\1\11\7\1\1\0\2\1\1\0\3\1";
+    "\2\0\1\11\17\1\1\11\1\0\3\1\1\0\5\1"+
+    "\2\0\4\1\1\11\13\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[21];
+    int [] result = new int[47];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -533,40 +589,55 @@ class McFunctionLexer implements FlexLexer {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { yybegin(YYINITIAL); return McFunctionTypes.KEY;
-            }
-          // fall through
-          case 8: break;
-          case 2:
-            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
-            }
-          // fall through
-          case 9: break;
-          case 3:
-            { yybegin(YYINITIAL); return McFunctionTypes.COMMENT;
-            }
-          // fall through
-          case 10: break;
-          case 4:
-            { yybegin(WAITING_VALUE); return McFunctionTypes.SEPARATOR;
-            }
-          // fall through
-          case 11: break;
-          case 5:
             { return TokenType.BAD_CHARACTER;
             }
           // fall through
+          case 11: break;
+          case 2:
+            { return TokenType.WHITE_SPACE;
+            }
+          // fall through
           case 12: break;
-          case 6:
-            { yybegin(YYINITIAL); return McFunctionTypes.VALUE;
+          case 3:
+            { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
             }
           // fall through
           case 13: break;
-          case 7:
-            { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
+          case 4:
+            { yybegin(YYINITIAL); return McFunctionTypes.COMMENT;
             }
           // fall through
           case 14: break;
+          case 5:
+            { return McFunctionTypes.SELECTOR;
+            }
+          // fall through
+          case 15: break;
+          case 6:
+            { return McFunctionTypes.COORDINATE;
+            }
+          // fall through
+          case 16: break;
+          case 7:
+            { return McFunctionTypes.OPERATOR;
+            }
+          // fall through
+          case 17: break;
+          case 8:
+            { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
+            }
+          // fall through
+          case 18: break;
+          case 9:
+            { return McFunctionTypes.IDENTIFIER;
+            }
+          // fall through
+          case 19: break;
+          case 10:
+            { return McFunctionTypes.COMMAND;
+            }
+          // fall through
+          case 20: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

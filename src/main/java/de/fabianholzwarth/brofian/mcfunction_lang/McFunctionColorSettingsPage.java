@@ -15,9 +15,10 @@ import java.util.Map;
 public class McFunctionColorSettingsPage implements ColorSettingsPage {
 
     private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Key", McFunctionSyntaxHighlighter.KEY),
-            new AttributesDescriptor("Separator", McFunctionSyntaxHighlighter.SEPARATOR),
-            new AttributesDescriptor("Value", McFunctionSyntaxHighlighter.VALUE),
+            new AttributesDescriptor("Command", McFunctionSyntaxHighlighter.COMMAND),
+            new AttributesDescriptor("Coordinate", McFunctionSyntaxHighlighter.COORDINATE),
+            new AttributesDescriptor("Selector", McFunctionSyntaxHighlighter.SELECTOR),
+            new AttributesDescriptor("Identifier", McFunctionSyntaxHighlighter.IDENTIFIER),
             new AttributesDescriptor("Bad value", McFunctionSyntaxHighlighter.BAD_CHARACTER)
     };
 

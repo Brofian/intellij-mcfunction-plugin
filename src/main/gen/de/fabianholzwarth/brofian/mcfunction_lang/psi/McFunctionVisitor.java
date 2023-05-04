@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class McFunctionVisitor extends PsiElementVisitor {
 
+  public void visitLine_(@NotNull McFunctionLine_ o) {
+    visitPsiElement(o);
+  }
+
   public void visitProperty(@NotNull McFunctionProperty o) {
     visitNamedElement(o);
   }

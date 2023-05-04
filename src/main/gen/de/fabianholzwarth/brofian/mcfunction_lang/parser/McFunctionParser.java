@@ -37,64 +37,53 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // property|COMMENT|CRLF
-  static boolean item_(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "item_")) return false;
+  public static boolean line_(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "line_")) return false;
     boolean r;
+    Marker m = enter_section_(b, l, _NONE_, LINE_, "<line>");
     r = property(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 
   /* ********************************************************** */
-  // item_*
+  // line_*
   static boolean mcFunctionFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mcFunctionFile")) return false;
     while (true) {
       int c = current_position_(b);
-      if (!item_(b, l + 1)) break;
+      if (!line_(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "mcFunctionFile", c)) break;
     }
     return true;
   }
 
   /* ********************************************************** */
-  // (KEY? SEPARATOR VALUE?) | KEY
+  // (COMMAND COORDINATE COORDINATE COORDINATE) | COMMAND | OPERATOR | COORDINATE | SELECTOR | IDENTIFIER
   public static boolean property(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property")) return false;
-    if (!nextTokenIs(b, "<property>", KEY, SEPARATOR)) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PROPERTY, "<property>");
     r = property_0(b, l + 1);
-    if (!r) r = consumeToken(b, KEY);
+    if (!r) r = consumeToken(b, COMMAND);
+    if (!r) r = consumeToken(b, OPERATOR);
+    if (!r) r = consumeToken(b, COORDINATE);
+    if (!r) r = consumeToken(b, SELECTOR);
+    if (!r) r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // KEY? SEPARATOR VALUE?
+  // COMMAND COORDINATE COORDINATE COORDINATE
   private static boolean property_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = property_0_0(b, l + 1);
-    r = r && consumeToken(b, SEPARATOR);
-    r = r && property_0_2(b, l + 1);
+    r = consumeTokens(b, 0, COMMAND, COORDINATE, COORDINATE, COORDINATE);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // KEY?
-  private static boolean property_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0_0")) return false;
-    consumeToken(b, KEY);
-    return true;
-  }
-
-  // VALUE?
-  private static boolean property_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0_2")) return false;
-    consumeToken(b, VALUE);
-    return true;
   }
 
 }

@@ -18,27 +18,35 @@ import de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes;
 
 CRLF=\R
 WHITE_SPACE=[\ \n\t\f]
-FIRST_VALUE_CHARACTER=[^ \n\f\\] | "\\".
-VALUE_CHARACTER=[^\n\f\\] | "\\"{CRLF} | "\\".
 END_OF_LINE_COMMENT=("#")[^\r\n]*
-SEPARATOR=[:=]
-KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
+
+STRING=\"(.*)\"
+COORDINATE=(-?\d|\~(-\d)?|\^(-\d)?)(\d+(\.\d)?)?
+
+COMMAND=say|fill|setblock|scoreboard
+SELECTOR=([a-zA-Z0-9\-\_]+)|(@[a,e,r,p,s](\[.*\])?)
+IDENTIFIER=[a-zA-Z0-9\-\_]+:[a-zA-Z0-9\-\_]+
+OPERATOR=<|>|<=|>=|matches|%=|\*=|-=|\+=|\/=
 
 %state WAITING_VALUE
 
 %%
 
-<YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return McFunctionTypes.COMMENT; }
+<YYINITIAL>
+{
+    {END_OF_LINE_COMMENT}     { yybegin(YYINITIAL); return McFunctionTypes.COMMENT; }
+    {COORDINATE}              { return McFunctionTypes.COORDINATE; }
+    {COMMAND}                 { return McFunctionTypes.COMMAND; }
+    {SELECTOR}                { return McFunctionTypes.SELECTOR; }
+    {IDENTIFIER}              { return McFunctionTypes.IDENTIFIER; }
+    {OPERATOR}                { return McFunctionTypes.OPERATOR; }
+}
 
-<YYINITIAL> {KEY_CHARACTER}+                                { yybegin(YYINITIAL); return McFunctionTypes.KEY; }
-
-<YYINITIAL> {SEPARATOR}                                     { yybegin(WAITING_VALUE); return McFunctionTypes.SEPARATOR; }
+<YYINITIAL> {WHITE_SPACE}                                   { return TokenType.WHITE_SPACE; }
 
 <WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 
 <WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return McFunctionTypes.VALUE; }
 
 ({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 

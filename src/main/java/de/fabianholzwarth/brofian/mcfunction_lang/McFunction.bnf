@@ -15,12 +15,13 @@
   psiImplUtilClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionPsiImplUtil"
 }
 
-mcFunctionFile ::= item_*
+mcFunctionFile ::= line_*
 
-private item_ ::= (property|COMMENT|CRLF)
+line_ ::= (property|COMMENT|CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY {
+property ::= (COMMAND COORDINATE COORDINATE COORDINATE) | COMMAND | OPERATOR | COORDINATE | SELECTOR | IDENTIFIER  {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
 }
+
