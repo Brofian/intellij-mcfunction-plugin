@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public class McFunctionCompletionContributor extends CompletionContributor {
 
     public McFunctionCompletionContributor() {
-        extend(CompletionType.BASIC, PlatformPatterns.psiElement(McFunctionTypes.COMMAND),
+        extend(CompletionType.BASIC, PlatformPatterns.psiElement(McFunctionTypes.IDENTIFIER),
                 new CompletionProvider<>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                @NotNull ProcessingContext context,

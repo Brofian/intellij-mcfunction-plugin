@@ -7,6 +7,15 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionProperty extends McFunctionNamedElement {
 
+  @Nullable
+  McFunctionCmdFill getCmdFill();
+
+  @Nullable
+  McFunctionCmdGive getCmdGive();
+
+  @Nullable
+  McFunctionCmdSetBlock getCmdSetBlock();
+
   String getKey();
 
   String getValue();

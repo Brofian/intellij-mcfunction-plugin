@@ -7,6 +7,22 @@ import com.intellij.psi.PsiElement;
 
 public class McFunctionVisitor extends PsiElementVisitor {
 
+  public void visitCmdFill(@NotNull McFunctionCmdFill o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdGive(@NotNull McFunctionCmdGive o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdScoreboard(@NotNull McFunctionCmdScoreboard o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSetBlock(@NotNull McFunctionCmdSetBlock o) {
+    visitPsiElement(o);
+  }
+
   public void visitLine_(@NotNull McFunctionLine_ o) {
     visitPsiElement(o);
   }

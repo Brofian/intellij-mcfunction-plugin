@@ -21,12 +21,15 @@ WHITE_SPACE=[\ \n\t\f]
 END_OF_LINE_COMMENT=("#")[^\r\n]*
 
 STRING=\"(.*)\"
+NUMBER=\d+
 COORDINATE=(-?\d|\~(-\d)?|\^(-\d)?)(\d+(\.\d)?)?
-
-COMMAND=say|fill|setblock|scoreboard
-SELECTOR=([a-zA-Z0-9\-\_]+)|(@[a,e,r,p,s](\[.*\])?)
-IDENTIFIER=[a-zA-Z0-9\-\_]+:[a-zA-Z0-9\-\_]+
+SELECTOR=(@[a,e,r,p,s](\[.*\])?)
+IDENTIFIER=([a-zA-Z0-9\-\_#]+:)?[a-zA-Z0-9\-\_]+
 OPERATOR=<|>|<=|>=|matches|%=|\*=|-=|\+=|\/=
+
+COMMAND_SETBLOCK=setblock
+COMMAND_FILL=fill
+COMMAND_GIVE=give
 
 %state WAITING_VALUE
 
@@ -35,8 +38,10 @@ OPERATOR=<|>|<=|>=|matches|%=|\*=|-=|\+=|\/=
 <YYINITIAL>
 {
     {END_OF_LINE_COMMENT}     { yybegin(YYINITIAL); return McFunctionTypes.COMMENT; }
+    {COMMAND_SETBLOCK}                 { return McFunctionTypes.COMMAND_SETBLOCK; }
+    {COMMAND_FILL}                 { return McFunctionTypes.COMMAND_FILL; }
+    {COMMAND_GIVE}                 { return McFunctionTypes.COMMAND_GIVE; }
     {COORDINATE}              { return McFunctionTypes.COORDINATE; }
-    {COMMAND}                 { return McFunctionTypes.COMMAND; }
     {SELECTOR}                { return McFunctionTypes.SELECTOR; }
     {IDENTIFIER}              { return McFunctionTypes.IDENTIFIER; }
     {OPERATOR}                { return McFunctionTypes.OPERATOR; }

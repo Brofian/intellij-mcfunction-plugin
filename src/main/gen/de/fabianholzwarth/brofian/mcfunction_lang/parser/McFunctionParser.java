@@ -36,6 +36,91 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // COMMAND_FILL COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE (IDENTIFIER | SELECTOR) [ IDENTIFIER ]
+  public static boolean cmdFill(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFill")) return false;
+    if (!nextTokenIs(b, COMMAND_FILL)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMAND_FILL, COORDINATE, COORDINATE, COORDINATE, COORDINATE, COORDINATE, COORDINATE);
+    r = r && cmdFill_7(b, l + 1);
+    r = r && cmdFill_8(b, l + 1);
+    exit_section_(b, m, CMD_FILL, r);
+    return r;
+  }
+
+  // IDENTIFIER | SELECTOR
+  private static boolean cmdFill_7(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFill_7")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, SELECTOR);
+    return r;
+  }
+
+  // [ IDENTIFIER ]
+  private static boolean cmdFill_8(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFill_8")) return false;
+    consumeToken(b, IDENTIFIER);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // COMMAND_GIVE (IDENTIFIER | SELECTOR) IDENTIFIER [NUMBER]
+  public static boolean cmdGive(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGive")) return false;
+    if (!nextTokenIs(b, COMMAND_GIVE)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMAND_GIVE);
+    r = r && cmdGive_1(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && cmdGive_3(b, l + 1);
+    exit_section_(b, m, CMD_GIVE, r);
+    return r;
+  }
+
+  // IDENTIFIER | SELECTOR
+  private static boolean cmdGive_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGive_1")) return false;
+    boolean r;
+    r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, SELECTOR);
+    return r;
+  }
+
+  // [NUMBER]
+  private static boolean cmdGive_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGive_3")) return false;
+    consumeToken(b, NUMBER);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // OPERATOR
+  public static boolean cmdScoreboard(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdScoreboard")) return false;
+    if (!nextTokenIs(b, OPERATOR)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, OPERATOR);
+    exit_section_(b, m, CMD_SCOREBOARD, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // COMMAND_SETBLOCK COORDINATE COORDINATE COORDINATE IDENTIFIER
+  public static boolean cmdSetBlock(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdSetBlock")) return false;
+    if (!nextTokenIs(b, COMMAND_SETBLOCK)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COMMAND_SETBLOCK, COORDINATE, COORDINATE, COORDINATE, IDENTIFIER);
+    exit_section_(b, m, CMD_SET_BLOCK, r);
+    return r;
+  }
+
+  /* ********************************************************** */
   // property|COMMENT|CRLF
   public static boolean line_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line_")) return false;
@@ -61,28 +146,15 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (COMMAND COORDINATE COORDINATE COORDINATE) | COMMAND | OPERATOR | COORDINATE | SELECTOR | IDENTIFIER
+  // cmdSetBlock | cmdGive | cmdFill
   public static boolean property(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, PROPERTY, "<property>");
-    r = property_0(b, l + 1);
-    if (!r) r = consumeToken(b, COMMAND);
-    if (!r) r = consumeToken(b, OPERATOR);
-    if (!r) r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, SELECTOR);
-    if (!r) r = consumeToken(b, IDENTIFIER);
+    r = cmdSetBlock(b, l + 1);
+    if (!r) r = cmdGive(b, l + 1);
+    if (!r) r = cmdFill(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // COMMAND COORDINATE COORDINATE COORDINATE
-  private static boolean property_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "property_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, COMMAND, COORDINATE, COORDINATE, COORDINATE);
-    exit_section_(b, m, null, r);
     return r;
   }
 

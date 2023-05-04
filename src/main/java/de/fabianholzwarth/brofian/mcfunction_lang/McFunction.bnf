@@ -13,15 +13,26 @@
   tokenTypeClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTokenType"
 
   psiImplUtilClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionPsiImplUtil"
+
+
+  tokens = [
+      WHITE_SPACE = 'regexp:\s+'
+  ]
 }
+
 
 mcFunctionFile ::= line_*
 
 line_ ::= (property|COMMENT|CRLF)
 
-property ::= (COMMAND COORDINATE COORDINATE COORDINATE) | COMMAND | OPERATOR | COORDINATE | SELECTOR | IDENTIFIER  {
+property ::= (cmdSetBlock | cmdGive | cmdFill) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
 }
 
+cmdSetBlock ::= (COMMAND_SETBLOCK COORDINATE COORDINATE COORDINATE IDENTIFIER)
+cmdFill ::= (COMMAND_FILL COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE (IDENTIFIER | SELECTOR) [ IDENTIFIER ])
+cmdGive ::= (COMMAND_GIVE (IDENTIFIER | SELECTOR) IDENTIFIER [NUMBER] )
+
+cmdScoreboard ::= OPERATOR

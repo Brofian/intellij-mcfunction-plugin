@@ -27,6 +27,24 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
   }
 
   @Override
+  @Nullable
+  public McFunctionCmdFill getCmdFill() {
+    return findChildByClass(McFunctionCmdFill.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdGive getCmdGive() {
+    return findChildByClass(McFunctionCmdGive.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSetBlock getCmdSetBlock() {
+    return findChildByClass(McFunctionCmdSetBlock.class);
+  }
+
+  @Override
   public String getKey() {
     return McFunctionPsiImplUtil.getKey(this);
   }

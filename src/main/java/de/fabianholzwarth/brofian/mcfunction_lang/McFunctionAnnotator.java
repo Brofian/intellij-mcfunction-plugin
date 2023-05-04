@@ -44,7 +44,7 @@ public class McFunctionAnnotator implements Annotator {
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
                 .range(prefixRange).textAttributes(DefaultLanguageHighlighterColors.KEYWORD).create();
         holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                .range(separatorRange).textAttributes(McFunctionSyntaxHighlighter.COMMAND).create();
+                .range(separatorRange).textAttributes(McFunctionSyntaxHighlighter.COMMAND_FILL).create();
 
 
         // Get the list of properties for given key
@@ -60,7 +60,7 @@ public class McFunctionAnnotator implements Annotator {
         } else {
             // Found at least one property, force the text attributes to McFunction syntax value character
             holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-                    .range(keyRange).textAttributes(McFunctionSyntaxHighlighter.COMMAND).create();
+                    .range(keyRange).textAttributes(McFunctionSyntaxHighlighter.COMMAND_FILL).create();
         }
     }
     
