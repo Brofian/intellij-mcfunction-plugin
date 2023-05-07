@@ -28,6 +28,60 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
 
   @Override
   @Nullable
+  public McFunctionCmdAdvancement getCmdAdvancement() {
+    return findChildByClass(McFunctionCmdAdvancement.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdAttribute getCmdAttribute() {
+    return findChildByClass(McFunctionCmdAttribute.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdBan getCmdBan() {
+    return findChildByClass(McFunctionCmdBan.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdBossBar getCmdBossBar() {
+    return findChildByClass(McFunctionCmdBossBar.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdClear getCmdClear() {
+    return findChildByClass(McFunctionCmdClear.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdClone getCmdClone() {
+    return findChildByClass(McFunctionCmdClone.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdDamage getCmdDamage() {
+    return findChildByClass(McFunctionCmdDamage.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdData getCmdData() {
+    return findChildByClass(McFunctionCmdData.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdDataPack getCmdDataPack() {
+    return findChildByClass(McFunctionCmdDataPack.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionCmdFill getCmdFill() {
     return findChildByClass(McFunctionCmdFill.class);
   }

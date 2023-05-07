@@ -25,14 +25,64 @@ mcFunctionFile ::= line_*
 
 line_ ::= (property|COMMENT|CRLF)
 
-property ::= (cmdSetBlock | cmdGive | cmdFill) {
+property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdSetBlock | cmdGive | cmdFill |
+              cmdClone | cmdDamage | cmdData | cmdDataPack) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
 }
 
-cmdSetBlock ::= (COMMAND_SETBLOCK COORDINATE COORDINATE COORDINATE IDENTIFIER)
-cmdFill ::= (COMMAND_FILL COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE COORDINATE (IDENTIFIER | SELECTOR) [ IDENTIFIER ])
-cmdGive ::= (COMMAND_GIVE (IDENTIFIER | SELECTOR) IDENTIFIER [NUMBER] )
+placeholder ::= COMMAND_ARGUMENT | COMMAND
+unused ::= OPERATOR
 
-cmdScoreboard ::= OPERATOR
+cmdAdvancement ::= ('advancement' ('revoke'|'grant') (IDENTIFIER | SELECTOR) (    'everything' |
+                                                                                        (('from'|'through'|'until') IDENTIFIER) |
+                                                                                        ('only' IDENTIFIER [ IDENTIFIER ])))
+cmdAttribute ::= ('attribute' (IDENTIFIER | SELECTOR) IDENTIFIER (  ('get' NUMBER) |
+                                                                    ('base' ('get' [NUMBER] |'set' NUMBER)) |
+                                                                    ('modifier' (
+                                                                        ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
+                                                                        ('remove' IDENTIFIER) |
+                                                                        ('value' 'get' IDENTIFIER [NUMBER])))))
+cmdBan ::= ('ban' (IDENTIFIER | SELECTOR) [STRING])
+cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
+                           ('get' IDENTIFIER ('max'|'players'|'value'|'visible')) |
+                           ('list') |
+                           ('remove' IDENTIFIER) |
+                           ('set' IDENTIFIER (
+                                ('color' COLOR) |
+                                ('max' NUMBER) |
+                                ('name' STRING) |
+                                ('players' (IDENTIFIER | SELECTOR)) |
+                                ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
+                                ('value' NUMBER) |
+                                ('visible' ('true'|'false'))
+                           ))))
+cmdClear ::= ('clear' [SELECTOR [IDENTIFIER [NUMBER]]])
+cmdClone ::= ('clone' ['from' IDENTIFIER] (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+                                          (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+                      ['to' IDENTIFIER])  (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+                      [ (('replace'|'masked') ['force'|'move'|'normal']) |
+                        ('filtered' IDENTIFIER ['force'|'move'|'normal'])
+                      ]
+cmdDamage ::= ('damage' (IDENTIFIER|SELECTOR) [IDENTIFIER] [('at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
+                                                            ('by' IDENTIFIER ['from' IDENTIFIER])])
+cmdData ::= ('data' (('get' cmdDataTarget [STRING [NUMBER]]) |
+                     ('merge' cmdDataTarget JSON) |
+                     ('modify' cmdDataTarget STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
+                        ('from' cmdDataTarget STRING) |
+                        ('string' cmdDataTarget STRING NUMBER NUMBER) |
+                        ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
+                     )) |
+                     ('remove' cmdDataTarget STRING)))
+    cmdDataTarget ::= ('block' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
+                      ('entity' (IDENTIFIER|SELECTOR)) |
+                      ('storage' STRING)
+cmdDataPack ::= ('datapack' (('disable' IDENTIFIER) |
+                             ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)])
+                             ('list' ['available'|'enabled'])))
+
+
+cmdSetBlock ::= ('setblock' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) IDENTIFIER)
+cmdFill ::= ('fill' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (IDENTIFIER | SELECTOR) [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' (IDENTIFIER | SELECTOR)) ])
+cmdGive ::= ('give' (IDENTIFIER | SELECTOR) IDENTIFIER [ NUMBER ] )

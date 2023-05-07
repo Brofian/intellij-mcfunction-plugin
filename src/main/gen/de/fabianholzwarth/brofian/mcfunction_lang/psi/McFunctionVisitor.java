@@ -7,15 +7,51 @@ import com.intellij.psi.PsiElement;
 
 public class McFunctionVisitor extends PsiElementVisitor {
 
+  public void visitCmdAdvancement(@NotNull McFunctionCmdAdvancement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdAttribute(@NotNull McFunctionCmdAttribute o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdBan(@NotNull McFunctionCmdBan o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdBossBar(@NotNull McFunctionCmdBossBar o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdClear(@NotNull McFunctionCmdClear o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdClone(@NotNull McFunctionCmdClone o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdDamage(@NotNull McFunctionCmdDamage o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdData(@NotNull McFunctionCmdData o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdDataPack(@NotNull McFunctionCmdDataPack o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdDataTarget(@NotNull McFunctionCmdDataTarget o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdFill(@NotNull McFunctionCmdFill o) {
     visitPsiElement(o);
   }
 
   public void visitCmdGive(@NotNull McFunctionCmdGive o) {
-    visitPsiElement(o);
-  }
-
-  public void visitCmdScoreboard(@NotNull McFunctionCmdScoreboard o) {
     visitPsiElement(o);
   }
 
@@ -27,8 +63,16 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitPlaceholder(@NotNull McFunctionPlaceholder o) {
+    visitPsiElement(o);
+  }
+
   public void visitProperty(@NotNull McFunctionProperty o) {
     visitNamedElement(o);
+  }
+
+  public void visitUnused(@NotNull McFunctionUnused o) {
+    visitPsiElement(o);
   }
 
   public void visitNamedElement(@NotNull McFunctionNamedElement o) {

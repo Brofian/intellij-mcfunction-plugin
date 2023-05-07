@@ -11,14 +11,14 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionCmdScoreboardImpl extends ASTWrapperPsiElement implements McFunctionCmdScoreboard {
+public class McFunctionPlaceholderImpl extends ASTWrapperPsiElement implements McFunctionPlaceholder {
 
-  public McFunctionCmdScoreboardImpl(@NotNull ASTNode node) {
+  public McFunctionPlaceholderImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitCmdScoreboard(this);
+    visitor.visitPlaceholder(this);
   }
 
   @Override

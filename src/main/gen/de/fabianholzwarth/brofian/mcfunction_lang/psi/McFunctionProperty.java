@@ -8,6 +8,33 @@ import com.intellij.psi.PsiElement;
 public interface McFunctionProperty extends McFunctionNamedElement {
 
   @Nullable
+  McFunctionCmdAdvancement getCmdAdvancement();
+
+  @Nullable
+  McFunctionCmdAttribute getCmdAttribute();
+
+  @Nullable
+  McFunctionCmdBan getCmdBan();
+
+  @Nullable
+  McFunctionCmdBossBar getCmdBossBar();
+
+  @Nullable
+  McFunctionCmdClear getCmdClear();
+
+  @Nullable
+  McFunctionCmdClone getCmdClone();
+
+  @Nullable
+  McFunctionCmdDamage getCmdDamage();
+
+  @Nullable
+  McFunctionCmdData getCmdData();
+
+  @Nullable
+  McFunctionCmdDataPack getCmdDataPack();
+
+  @Nullable
   McFunctionCmdFill getCmdFill();
 
   @Nullable
