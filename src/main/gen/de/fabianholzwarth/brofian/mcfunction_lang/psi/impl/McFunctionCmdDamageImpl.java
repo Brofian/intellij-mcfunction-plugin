@@ -27,4 +27,16 @@ public class McFunctionCmdDamageImpl extends ASTWrapperPsiElement implements McF
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public McFunctionCoordinateTripe getCoordinateTripe() {
+    return findChildByClass(McFunctionCoordinateTripe.class);
+  }
+
+  @Override
+  @NotNull
+  public McFunctionTargetSelector getTargetSelector() {
+    return findNotNullChildByClass(McFunctionTargetSelector.class);
+  }
+
 }

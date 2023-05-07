@@ -27,4 +27,10 @@ public class McFunctionCmdSetBlockImpl extends ASTWrapperPsiElement implements M
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public McFunctionCoordinateTripe getCoordinateTripe() {
+    return findNotNullChildByClass(McFunctionCoordinateTripe.class);
+  }
+
 }

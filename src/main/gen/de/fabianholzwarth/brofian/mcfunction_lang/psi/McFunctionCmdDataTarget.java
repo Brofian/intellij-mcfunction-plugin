@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdDataTarget extends PsiElement {
 
+  @Nullable
+  McFunctionCoordinateTripe getCoordinateTripe();
+
+  @Nullable
+  McFunctionTargetSelector getTargetSelector();
+
 }

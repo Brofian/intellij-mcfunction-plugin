@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdDamage extends PsiElement {
 
+  @Nullable
+  McFunctionCoordinateTripe getCoordinateTripe();
+
+  @NotNull
+  McFunctionTargetSelector getTargetSelector();
+
 }

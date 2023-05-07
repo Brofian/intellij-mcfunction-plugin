@@ -27,4 +27,10 @@ public class McFunctionCmdCloneImpl extends ASTWrapperPsiElement implements McFu
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<McFunctionCoordinateTripe> getCoordinateTripeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, McFunctionCoordinateTripe.class);
+  }
+
 }

@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdClone extends PsiElement {
 
+  @NotNull
+  List<McFunctionCoordinateTripe> getCoordinateTripeList();
+
 }

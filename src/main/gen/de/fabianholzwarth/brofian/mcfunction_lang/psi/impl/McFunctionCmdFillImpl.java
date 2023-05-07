@@ -27,4 +27,16 @@ public class McFunctionCmdFillImpl extends ASTWrapperPsiElement implements McFun
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<McFunctionCoordinateTripe> getCoordinateTripeList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, McFunctionCoordinateTripe.class);
+  }
+
+  @Override
+  @NotNull
+  public List<McFunctionTargetSelector> getTargetSelectorList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, McFunctionTargetSelector.class);
+  }
+
 }

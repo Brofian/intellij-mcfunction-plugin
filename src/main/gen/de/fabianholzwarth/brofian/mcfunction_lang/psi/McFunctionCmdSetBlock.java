@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdSetBlock extends PsiElement {
 
+  @NotNull
+  McFunctionCoordinateTripe getCoordinateTripe();
+
 }

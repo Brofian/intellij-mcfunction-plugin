@@ -59,6 +59,10 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCoordinateTripe(@NotNull McFunctionCoordinateTripe o) {
+    visitPsiElement(o);
+  }
+
   public void visitLine_(@NotNull McFunctionLine_ o) {
     visitPsiElement(o);
   }
@@ -69,6 +73,10 @@ public class McFunctionVisitor extends PsiElementVisitor {
 
   public void visitProperty(@NotNull McFunctionProperty o) {
     visitNamedElement(o);
+  }
+
+  public void visitTargetSelector(@NotNull McFunctionTargetSelector o) {
+    visitPsiElement(o);
   }
 
   public void visitUnused(@NotNull McFunctionUnused o) {

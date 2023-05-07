@@ -17,7 +17,7 @@ import de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes;
 %eof}
 
 CRLF=\R
-WHITE_SPACE=[\ \n\t\f]
+WHITE_SPACE=[\ \t\f]
 END_OF_LINE_COMMENT=("#")[^\r\n]*
 
 STRING=\"(.*)\"
@@ -52,8 +52,6 @@ COMMAND_ARGUMENT =  {CONSTANTS} |
                     {COMMAND_DATAPACK_ARGS} |
                     {COMMAND_FILL_ARGS}
 
-%state WAITING_VALUE
-
 %%
 
 <YYINITIAL>
@@ -70,13 +68,10 @@ COMMAND_ARGUMENT =  {CONSTANTS} |
     {STRING}                  { return McFunctionTypes.STRING; }
     {JSON}                    { return McFunctionTypes.JSON; }
     {IDENTIFIER}              { return McFunctionTypes.IDENTIFIER; }
+
+    {WHITE_SPACE}+            { return TokenType.WHITE_SPACE; }
+    {CRLF}                    { return TokenType.WHITE_SPACE; }
 }
-
-<YYINITIAL> {WHITE_SPACE}                                   { return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {CRLF}({CRLF}|{WHITE_SPACE})+               { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
-
-<WAITING_VALUE> {WHITE_SPACE}+                              { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE; }
 
 ({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 

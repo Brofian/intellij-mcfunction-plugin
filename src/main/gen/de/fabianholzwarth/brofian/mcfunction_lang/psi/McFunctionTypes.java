@@ -21,9 +21,11 @@ public interface McFunctionTypes {
   IElementType CMD_FILL = new McFunctionElementType("CMD_FILL");
   IElementType CMD_GIVE = new McFunctionElementType("CMD_GIVE");
   IElementType CMD_SET_BLOCK = new McFunctionElementType("CMD_SET_BLOCK");
+  IElementType COORDINATE_TRIPE = new McFunctionElementType("COORDINATE_TRIPE");
   IElementType LINE_ = new McFunctionElementType("LINE_");
   IElementType PLACEHOLDER = new McFunctionElementType("PLACEHOLDER");
   IElementType PROPERTY = new McFunctionElementType("PROPERTY");
+  IElementType TARGET_SELECTOR = new McFunctionElementType("TARGET_SELECTOR");
   IElementType UNUSED = new McFunctionElementType("UNUSED");
 
   IElementType CMDDATA_1_2_4_3_0 = new McFunctionTokenType("cmdData_1_2_4_3_0");
@@ -82,6 +84,9 @@ public interface McFunctionTypes {
       else if (type == CMD_SET_BLOCK) {
         return new McFunctionCmdSetBlockImpl(node);
       }
+      else if (type == COORDINATE_TRIPE) {
+        return new McFunctionCoordinateTripeImpl(node);
+      }
       else if (type == LINE_) {
         return new McFunctionLine_Impl(node);
       }
@@ -90,6 +95,9 @@ public interface McFunctionTypes {
       }
       else if (type == PROPERTY) {
         return new McFunctionPropertyImpl(node);
+      }
+      else if (type == TARGET_SELECTOR) {
+        return new McFunctionTargetSelectorImpl(node);
       }
       else if (type == UNUSED) {
         return new McFunctionUnusedImpl(node);

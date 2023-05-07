@@ -14,17 +14,25 @@
 
   psiImplUtilClass="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionPsiImplUtil"
 
-
   tokens = [
-      WHITE_SPACE = 'regexp:\s+'
+     recoveryPoint="regexp:\R+"
   ]
+
 }
 
+// each file consists from an set of lines
+mcFunctionFile ::= line_* {
+    recoverWhile=statement_recover
+}
 
-mcFunctionFile ::= line_*
+// todo: recovery rule does not apply. The parsing is still stopped at the first error
+private statement_recover ::= !("#" | CRLF | '\n' | ' ')
 
+
+// each line can either be a comment, an empty line break, or a property with a line break
 line_ ::= (property|COMMENT|CRLF)
 
+// the available properties are the possible commands
 property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdSetBlock | cmdGive | cmdFill |
               cmdClone | cmdDamage | cmdData | cmdDataPack) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
@@ -32,19 +40,26 @@ property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | c
   methods=[getKey getValue getName setName getNameIdentifier]
 }
 
+// command argument and command are two types used in the lexer, but are unused. Instead, the command names are used separately here
 placeholder ::= COMMAND_ARGUMENT | COMMAND
 unused ::= OPERATOR
 
-cmdAdvancement ::= ('advancement' ('revoke'|'grant') (IDENTIFIER | SELECTOR) (    'everything' |
-                                                                                        (('from'|'through'|'until') IDENTIFIER) |
-                                                                                        ('only' IDENTIFIER [ IDENTIFIER ])))
-cmdAttribute ::= ('attribute' (IDENTIFIER | SELECTOR) IDENTIFIER (  ('get' NUMBER) |
-                                                                    ('base' ('get' [NUMBER] |'set' NUMBER)) |
-                                                                    ('modifier' (
-                                                                        ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
-                                                                        ('remove' IDENTIFIER) |
-                                                                        ('value' 'get' IDENTIFIER [NUMBER])))))
-cmdBan ::= ('ban' (IDENTIFIER | SELECTOR) [STRING])
+// shortcuts for frequently used sequences
+coordinateTripe ::= ((COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER))
+targetSelector ::= (SELECTOR|IDENTIFIER)
+
+
+// the command definitions
+cmdAdvancement ::= ('advancement' ('revoke'|'grant') targetSelector ('everything' |
+                                                                     (('from'|'through'|'until') IDENTIFIER) |
+                                                                     ('only' IDENTIFIER [ IDENTIFIER ])))
+cmdAttribute ::= ('attribute' targetSelector IDENTIFIER (('get' NUMBER) |
+                                                         ('base' ('get' [NUMBER] |'set' NUMBER)) |
+                                                         ('modifier' (
+                                                            ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
+                                                            ('remove' IDENTIFIER) |
+                                                            ('value' 'get' IDENTIFIER [NUMBER])))))
+cmdBan ::= ('ban' targetSelector [STRING])
 cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                            ('get' IDENTIFIER ('max'|'players'|'value'|'visible')) |
                            ('list') |
@@ -53,36 +68,35 @@ cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                                 ('color' COLOR) |
                                 ('max' NUMBER) |
                                 ('name' STRING) |
-                                ('players' (IDENTIFIER | SELECTOR)) |
+                                ('players' targetSelector) |
                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
                                 ('value' NUMBER) |
                                 ('visible' ('true'|'false'))
                            ))))
 cmdClear ::= ('clear' [SELECTOR [IDENTIFIER [NUMBER]]])
-cmdClone ::= ('clone' ['from' IDENTIFIER] (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-                                          (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-                      ['to' IDENTIFIER])  (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+cmdClone ::= ('clone' ['from' IDENTIFIER] coordinateTripe coordinateTripe
+                      ['to' IDENTIFIER]   coordinateTripe
                       [ (('replace'|'masked') ['force'|'move'|'normal']) |
                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
-                      ]
-cmdDamage ::= ('damage' (IDENTIFIER|SELECTOR) [IDENTIFIER] [('at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-                                                            ('by' IDENTIFIER ['from' IDENTIFIER])])
-cmdData ::= ('data' (('get' cmdDataTarget [STRING [NUMBER]]) |
-                     ('merge' cmdDataTarget JSON) |
-                     ('modify' cmdDataTarget STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
-                        ('from' cmdDataTarget STRING) |
-                        ('string' cmdDataTarget STRING NUMBER NUMBER) |
+                      ])
+cmdDamage ::= ('damage' targetSelector NUMBER [IDENTIFIER [('at' coordinateTripe) |
+                                                           ('by' IDENTIFIER ['from' IDENTIFIER])]])
+cmdData ::= ('data' (('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
+                     ('merge' cmdData_Target JSON) |
+                     ('modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
+                        ('from' cmdData_Target STRING) |
+                        ('string' cmdData_Target STRING NUMBER NUMBER) |
                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
                      )) |
-                     ('remove' cmdDataTarget STRING)))
-    cmdDataTarget ::= ('block' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-                      ('entity' (IDENTIFIER|SELECTOR)) |
-                      ('storage' STRING)
+                     ('remove' cmdData_Target STRING)))
+    cmdData_Target ::= ('block' coordinateTripe) |
+                       ('entity' targetSelector) |
+                       ('storage' STRING)
 cmdDataPack ::= ('datapack' (('disable' IDENTIFIER) |
-                             ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)])
+                             ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]) |
                              ('list' ['available'|'enabled'])))
 
 
-cmdSetBlock ::= ('setblock' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) IDENTIFIER)
-cmdFill ::= ('fill' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (IDENTIFIER | SELECTOR) [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' (IDENTIFIER | SELECTOR)) ])
-cmdGive ::= ('give' (IDENTIFIER | SELECTOR) IDENTIFIER [ NUMBER ] )
+cmdSetBlock ::= ('setblock' coordinateTripe IDENTIFIER)
+cmdFill ::= ('fill' coordinateTripe coordinateTripe targetSelector [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ])
+cmdGive ::= ('give' targetSelector IDENTIFIER [ NUMBER ] )

@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdGive extends PsiElement {
 
+  @NotNull
+  McFunctionTargetSelector getTargetSelector();
+
 }

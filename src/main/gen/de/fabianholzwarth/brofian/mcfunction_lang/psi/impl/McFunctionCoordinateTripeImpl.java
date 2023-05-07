@@ -11,26 +11,20 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionCmdBossBarImpl extends ASTWrapperPsiElement implements McFunctionCmdBossBar {
+public class McFunctionCoordinateTripeImpl extends ASTWrapperPsiElement implements McFunctionCoordinateTripe {
 
-  public McFunctionCmdBossBarImpl(@NotNull ASTNode node) {
+  public McFunctionCoordinateTripeImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitCmdBossBar(this);
+    visitor.visitCoordinateTripe(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof McFunctionVisitor) accept((McFunctionVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public McFunctionTargetSelector getTargetSelector() {
-    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

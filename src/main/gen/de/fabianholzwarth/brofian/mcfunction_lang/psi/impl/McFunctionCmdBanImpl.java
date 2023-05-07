@@ -27,4 +27,10 @@ public class McFunctionCmdBanImpl extends ASTWrapperPsiElement implements McFunc
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public McFunctionTargetSelector getTargetSelector() {
+    return findNotNullChildByClass(McFunctionTargetSelector.class);
+  }
+
 }

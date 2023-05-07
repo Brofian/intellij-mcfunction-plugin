@@ -36,16 +36,16 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'advancement' ('revoke'|'grant') (IDENTIFIER | SELECTOR) (    'everything' |
-  //                                                                                         (('from'|'through'|'until') IDENTIFIER) |
-  //                                                                                         ('only' IDENTIFIER [ IDENTIFIER ]))
+  // 'advancement' ('revoke'|'grant') targetSelector ('everything' |
+  //                                                                      (('from'|'through'|'until') IDENTIFIER) |
+  //                                                                      ('only' IDENTIFIER [ IDENTIFIER ]))
   public static boolean cmdAdvancement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAdvancement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_ADVANCEMENT, "<cmd advancement>");
     r = consumeToken(b, "advancement");
     r = r && cmdAdvancement_1(b, l + 1);
-    r = r && cmdAdvancement_2(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     r = r && cmdAdvancement_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -60,18 +60,9 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdAdvancement_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdAdvancement_2")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
-    return r;
-  }
-
   // 'everything' |
-  //                                                                                         (('from'|'through'|'until') IDENTIFIER) |
-  //                                                                                         ('only' IDENTIFIER [ IDENTIFIER ])
+  //                                                                      (('from'|'through'|'until') IDENTIFIER) |
+  //                                                                      ('only' IDENTIFIER [ IDENTIFIER ])
   private static boolean cmdAdvancement_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAdvancement_3")) return false;
     boolean r;
@@ -124,39 +115,30 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'attribute' (IDENTIFIER | SELECTOR) IDENTIFIER (  ('get' NUMBER) |
-  //                                                                     ('base' ('get' [NUMBER] |'set' NUMBER)) |
-  //                                                                     ('modifier' (
-  //                                                                         ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
-  //                                                                         ('remove' IDENTIFIER) |
-  //                                                                         ('value' 'get' IDENTIFIER [NUMBER]))))
+  // 'attribute' targetSelector IDENTIFIER (('get' NUMBER) |
+  //                                                          ('base' ('get' [NUMBER] |'set' NUMBER)) |
+  //                                                          ('modifier' (
+  //                                                             ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
+  //                                                             ('remove' IDENTIFIER) |
+  //                                                             ('value' 'get' IDENTIFIER [NUMBER]))))
   public static boolean cmdAttribute(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAttribute")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_ATTRIBUTE, "<cmd attribute>");
     r = consumeToken(b, "attribute");
-    r = r && cmdAttribute_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
     r = r && cmdAttribute_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdAttribute_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdAttribute_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
-    return r;
-  }
-
   // ('get' NUMBER) |
-  //                                                                     ('base' ('get' [NUMBER] |'set' NUMBER)) |
-  //                                                                     ('modifier' (
-  //                                                                         ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
-  //                                                                         ('remove' IDENTIFIER) |
-  //                                                                         ('value' 'get' IDENTIFIER [NUMBER])))
+  //                                                          ('base' ('get' [NUMBER] |'set' NUMBER)) |
+  //                                                          ('modifier' (
+  //                                                             ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
+  //                                                             ('remove' IDENTIFIER) |
+  //                                                             ('value' 'get' IDENTIFIER [NUMBER])))
   private static boolean cmdAttribute_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAttribute_3")) return false;
     boolean r;
@@ -231,9 +213,9 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // 'modifier' (
-  //                                                                         ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
-  //                                                                         ('remove' IDENTIFIER) |
-  //                                                                         ('value' 'get' IDENTIFIER [NUMBER]))
+  //                                                             ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
+  //                                                             ('remove' IDENTIFIER) |
+  //                                                             ('value' 'get' IDENTIFIER [NUMBER]))
   private static boolean cmdAttribute_3_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAttribute_3_2")) return false;
     boolean r;
@@ -245,8 +227,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
-  //                                                                         ('remove' IDENTIFIER) |
-  //                                                                         ('value' 'get' IDENTIFIER [NUMBER])
+  //                                                             ('remove' IDENTIFIER) |
+  //                                                             ('value' 'get' IDENTIFIER [NUMBER])
   private static boolean cmdAttribute_3_2_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdAttribute_3_2_1")) return false;
     boolean r;
@@ -312,24 +294,15 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'ban' (IDENTIFIER | SELECTOR) [STRING]
+  // 'ban' targetSelector [STRING]
   public static boolean cmdBan(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdBan")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_BAN, "<cmd ban>");
     r = consumeToken(b, "ban");
-    r = r && cmdBan_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     r = r && cmdBan_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdBan_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdBan_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
     return r;
   }
 
@@ -349,7 +322,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   //                                 ('color' COLOR) |
   //                                 ('max' NUMBER) |
   //                                 ('name' STRING) |
-  //                                 ('players' (IDENTIFIER | SELECTOR)) |
+  //                                 ('players' targetSelector) |
   //                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
   //                                 ('value' NUMBER) |
   //                                 ('visible' ('true'|'false'))
@@ -372,7 +345,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   //                                 ('color' COLOR) |
   //                                 ('max' NUMBER) |
   //                                 ('name' STRING) |
-  //                                 ('players' (IDENTIFIER | SELECTOR)) |
+  //                                 ('players' targetSelector) |
   //                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
   //                                 ('value' NUMBER) |
   //                                 ('visible' ('true'|'false'))
@@ -449,7 +422,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   //                                 ('color' COLOR) |
   //                                 ('max' NUMBER) |
   //                                 ('name' STRING) |
-  //                                 ('players' (IDENTIFIER | SELECTOR)) |
+  //                                 ('players' targetSelector) |
   //                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
   //                                 ('value' NUMBER) |
   //                                 ('visible' ('true'|'false'))
@@ -468,7 +441,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   // ('color' COLOR) |
   //                                 ('max' NUMBER) |
   //                                 ('name' STRING) |
-  //                                 ('players' (IDENTIFIER | SELECTOR)) |
+  //                                 ('players' targetSelector) |
   //                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
   //                                 ('value' NUMBER) |
   //                                 ('visible' ('true'|'false'))
@@ -520,23 +493,14 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'players' (IDENTIFIER | SELECTOR)
+  // 'players' targetSelector
   private static boolean cmdBossBar_1_4_2_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdBossBar_1_4_2_3")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "players");
-    r = r && cmdBossBar_1_4_2_3_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdBossBar_1_4_2_3_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdBossBar_1_4_2_3_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
     return r;
   }
 
@@ -650,9 +614,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('clone' ['from' IDENTIFIER] (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  //                                           (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  //                       ['to' IDENTIFIER])  (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+  // 'clone' ['from' IDENTIFIER] coordinateTripe coordinateTripe
+  //                       ['to' IDENTIFIER]   coordinateTripe
   //                       [ (('replace'|'masked') ['force'|'move'|'normal']) |
   //                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
   //                       ]
@@ -660,45 +623,27 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "cmdClone")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_CLONE, "<cmd clone>");
-    r = cmdClone_0(b, l + 1);
+    r = consumeToken(b, "clone");
     r = r && cmdClone_1(b, l + 1);
-    r = r && cmdClone_2(b, l + 1);
-    r = r && cmdClone_3(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
     r = r && cmdClone_4(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
+    r = r && cmdClone_6(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // 'clone' ['from' IDENTIFIER] (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  //                                           (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  //                       ['to' IDENTIFIER]
-  private static boolean cmdClone_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, "clone");
-    r = r && cmdClone_0_1(b, l + 1);
-    r = r && cmdClone_0_2(b, l + 1);
-    r = r && cmdClone_0_3(b, l + 1);
-    r = r && cmdClone_0_4(b, l + 1);
-    r = r && cmdClone_0_5(b, l + 1);
-    r = r && cmdClone_0_6(b, l + 1);
-    r = r && cmdClone_0_7(b, l + 1);
-    r = r && cmdClone_0_8(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
   // ['from' IDENTIFIER]
-  private static boolean cmdClone_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_1")) return false;
-    cmdClone_0_1_0(b, l + 1);
+  private static boolean cmdClone_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_1")) return false;
+    cmdClone_1_0(b, l + 1);
     return true;
   }
 
   // 'from' IDENTIFIER
-  private static boolean cmdClone_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_1_0")) return false;
+  private static boolean cmdClone_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "from");
@@ -707,70 +652,16 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_2")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_3")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_4")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_5")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_6")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_0_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_7")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
   // ['to' IDENTIFIER]
-  private static boolean cmdClone_0_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_8")) return false;
-    cmdClone_0_8_0(b, l + 1);
+  private static boolean cmdClone_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_4")) return false;
+    cmdClone_4_0(b, l + 1);
     return true;
   }
 
   // 'to' IDENTIFIER
-  private static boolean cmdClone_0_8_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_0_8_0")) return false;
+  private static boolean cmdClone_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "to");
@@ -779,68 +670,41 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_1")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_2")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdClone_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_3")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
   // [ (('replace'|'masked') ['force'|'move'|'normal']) |
   //                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
   //                       ]
-  private static boolean cmdClone_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4")) return false;
-    cmdClone_4_0(b, l + 1);
+  private static boolean cmdClone_6(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6")) return false;
+    cmdClone_6_0(b, l + 1);
     return true;
   }
 
   // (('replace'|'masked') ['force'|'move'|'normal']) |
   //                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
-  private static boolean cmdClone_4_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0")) return false;
+  private static boolean cmdClone_6_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdClone_4_0_0(b, l + 1);
-    if (!r) r = cmdClone_4_0_1(b, l + 1);
+    r = cmdClone_6_0_0(b, l + 1);
+    if (!r) r = cmdClone_6_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // ('replace'|'masked') ['force'|'move'|'normal']
-  private static boolean cmdClone_4_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_0")) return false;
+  private static boolean cmdClone_6_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdClone_4_0_0_0(b, l + 1);
-    r = r && cmdClone_4_0_0_1(b, l + 1);
+    r = cmdClone_6_0_0_0(b, l + 1);
+    r = r && cmdClone_6_0_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // 'replace'|'masked'
-  private static boolean cmdClone_4_0_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_0_0")) return false;
+  private static boolean cmdClone_6_0_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_0_0")) return false;
     boolean r;
     r = consumeToken(b, "replace");
     if (!r) r = consumeToken(b, "masked");
@@ -848,15 +712,15 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // ['force'|'move'|'normal']
-  private static boolean cmdClone_4_0_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_0_1")) return false;
-    cmdClone_4_0_0_1_0(b, l + 1);
+  private static boolean cmdClone_6_0_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_0_1")) return false;
+    cmdClone_6_0_0_1_0(b, l + 1);
     return true;
   }
 
   // 'force'|'move'|'normal'
-  private static boolean cmdClone_4_0_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_0_1_0")) return false;
+  private static boolean cmdClone_6_0_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_0_1_0")) return false;
     boolean r;
     r = consumeToken(b, "force");
     if (!r) r = consumeToken(b, "move");
@@ -865,27 +729,27 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // 'filtered' IDENTIFIER ['force'|'move'|'normal']
-  private static boolean cmdClone_4_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_1")) return false;
+  private static boolean cmdClone_6_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "filtered");
     r = r && consumeToken(b, IDENTIFIER);
-    r = r && cmdClone_4_0_1_2(b, l + 1);
+    r = r && cmdClone_6_0_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // ['force'|'move'|'normal']
-  private static boolean cmdClone_4_0_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_1_2")) return false;
-    cmdClone_4_0_1_2_0(b, l + 1);
+  private static boolean cmdClone_6_0_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_1_2")) return false;
+    cmdClone_6_0_1_2_0(b, l + 1);
     return true;
   }
 
   // 'force'|'move'|'normal'
-  private static boolean cmdClone_4_0_1_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdClone_4_0_1_2_0")) return false;
+  private static boolean cmdClone_6_0_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdClone_6_0_1_2_0")) return false;
     boolean r;
     r = consumeToken(b, "force");
     if (!r) r = consumeToken(b, "move");
@@ -894,118 +758,93 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'damage' (IDENTIFIER|SELECTOR) [IDENTIFIER] [('at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-  //                                                             ('by' IDENTIFIER ['from' IDENTIFIER])]
+  // 'damage' targetSelector NUMBER [IDENTIFIER [('at' coordinateTripe) |
+  //                                                            ('by' IDENTIFIER ['from' IDENTIFIER])]]
   public static boolean cmdDamage(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDamage")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_DAMAGE, "<cmd damage>");
     r = consumeToken(b, "damage");
-    r = r && cmdDamage_1(b, l + 1);
-    r = r && cmdDamage_2(b, l + 1);
+    r = r && targetSelector(b, l + 1);
+    r = r && consumeToken(b, NUMBER);
     r = r && cmdDamage_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // IDENTIFIER|SELECTOR
-  private static boolean cmdDamage_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
-    return r;
-  }
-
-  // [IDENTIFIER]
-  private static boolean cmdDamage_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_2")) return false;
-    consumeToken(b, IDENTIFIER);
-    return true;
-  }
-
-  // [('at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-  //                                                             ('by' IDENTIFIER ['from' IDENTIFIER])]
+  // [IDENTIFIER [('at' coordinateTripe) |
+  //                                                            ('by' IDENTIFIER ['from' IDENTIFIER])]]
   private static boolean cmdDamage_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDamage_3")) return false;
     cmdDamage_3_0(b, l + 1);
     return true;
   }
 
-  // ('at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-  //                                                             ('by' IDENTIFIER ['from' IDENTIFIER])
+  // IDENTIFIER [('at' coordinateTripe) |
+  //                                                            ('by' IDENTIFIER ['from' IDENTIFIER])]
   private static boolean cmdDamage_3_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDamage_3_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdDamage_3_0_0(b, l + 1);
-    if (!r) r = cmdDamage_3_0_1(b, l + 1);
+    r = consumeToken(b, IDENTIFIER);
+    r = r && cmdDamage_3_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // 'at' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  private static boolean cmdDamage_3_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_0")) return false;
+  // [('at' coordinateTripe) |
+  //                                                            ('by' IDENTIFIER ['from' IDENTIFIER])]
+  private static boolean cmdDamage_3_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1")) return false;
+    cmdDamage_3_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // ('at' coordinateTripe) |
+  //                                                            ('by' IDENTIFIER ['from' IDENTIFIER])
+  private static boolean cmdDamage_3_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdDamage_3_0_1_0_0(b, l + 1);
+    if (!r) r = cmdDamage_3_0_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'at' coordinateTripe
+  private static boolean cmdDamage_3_0_1_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_0_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "at");
-    r = r && cmdDamage_3_0_0_1(b, l + 1);
-    r = r && cmdDamage_3_0_0_2(b, l + 1);
-    r = r && cmdDamage_3_0_0_3(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdDamage_3_0_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_0_1")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdDamage_3_0_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_0_2")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdDamage_3_0_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_0_3")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
     return r;
   }
 
   // 'by' IDENTIFIER ['from' IDENTIFIER]
-  private static boolean cmdDamage_3_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_1")) return false;
+  private static boolean cmdDamage_3_0_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "by");
     r = r && consumeToken(b, IDENTIFIER);
-    r = r && cmdDamage_3_0_1_2(b, l + 1);
+    r = r && cmdDamage_3_0_1_0_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // ['from' IDENTIFIER]
-  private static boolean cmdDamage_3_0_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_2")) return false;
-    cmdDamage_3_0_1_2_0(b, l + 1);
+  private static boolean cmdDamage_3_0_1_0_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_0_1_2")) return false;
+    cmdDamage_3_0_1_0_1_2_0(b, l + 1);
     return true;
   }
 
   // 'from' IDENTIFIER
-  private static boolean cmdDamage_3_0_1_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_2_0")) return false;
+  private static boolean cmdDamage_3_0_1_0_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDamage_3_0_1_0_1_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "from");
@@ -1015,14 +854,14 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'data' (('get' cmdDataTarget [STRING [NUMBER]]) |
-  //                      ('merge' cmdDataTarget JSON) |
-  //                      ('modify' cmdDataTarget STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
-  //                         ('from' cmdDataTarget STRING) |
-  //                         ('string' cmdDataTarget STRING NUMBER NUMBER) |
+  // 'data' (('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
+  //                      ('merge' cmdData_Target JSON) |
+  //                      ('modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
+  //                         ('from' cmdData_Target STRING) |
+  //                         ('string' cmdData_Target STRING NUMBER NUMBER) |
   //                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
   //                      )) |
-  //                      ('remove' cmdDataTarget STRING))
+  //                      ('remove' cmdData_Target STRING))
   public static boolean cmdData(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData")) return false;
     boolean r;
@@ -1033,14 +872,14 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('get' cmdDataTarget [STRING [NUMBER]]) |
-  //                      ('merge' cmdDataTarget JSON) |
-  //                      ('modify' cmdDataTarget STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
-  //                         ('from' cmdDataTarget STRING) |
-  //                         ('string' cmdDataTarget STRING NUMBER NUMBER) |
+  // ('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
+  //                      ('merge' cmdData_Target JSON) |
+  //                      ('modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
+  //                         ('from' cmdData_Target STRING) |
+  //                         ('string' cmdData_Target STRING NUMBER NUMBER) |
   //                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
   //                      )) |
-  //                      ('remove' cmdDataTarget STRING)
+  //                      ('remove' cmdData_Target STRING)
   private static boolean cmdData_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1")) return false;
     boolean r;
@@ -1053,31 +892,31 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'get' cmdDataTarget [STRING [NUMBER]]
+  // 'get' cmdData_Target [IDENTIFIER [NUMBER]]
   private static boolean cmdData_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "get");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && cmdData_1_0_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // [STRING [NUMBER]]
+  // [IDENTIFIER [NUMBER]]
   private static boolean cmdData_1_0_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_0_2")) return false;
     cmdData_1_0_2_0(b, l + 1);
     return true;
   }
 
-  // STRING [NUMBER]
+  // IDENTIFIER [NUMBER]
   private static boolean cmdData_1_0_2_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_0_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, STRING);
+    r = consumeToken(b, IDENTIFIER);
     r = r && cmdData_1_0_2_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -1090,21 +929,21 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // 'merge' cmdDataTarget JSON
+  // 'merge' cmdData_Target JSON
   private static boolean cmdData_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "merge");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && consumeToken(b, JSON);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // 'modify' cmdDataTarget STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
-  //                         ('from' cmdDataTarget STRING) |
-  //                         ('string' cmdDataTarget STRING NUMBER NUMBER) |
+  // 'modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
+  //                         ('from' cmdData_Target STRING) |
+  //                         ('string' cmdData_Target STRING NUMBER NUMBER) |
   //                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
   //                      )
   private static boolean cmdData_1_2(PsiBuilder b, int l) {
@@ -1112,7 +951,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "modify");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && consumeToken(b, STRING);
     r = r && cmdData_1_2_3(b, l + 1);
     r = r && cmdData_1_2_4(b, l + 1);
@@ -1145,8 +984,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('from' cmdDataTarget STRING) |
-  //                         ('string' cmdDataTarget STRING NUMBER NUMBER) |
+  // ('from' cmdData_Target STRING) |
+  //                         ('string' cmdData_Target STRING NUMBER NUMBER) |
   //                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
   //                      
   private static boolean cmdData_1_2_4(PsiBuilder b, int l) {
@@ -1161,25 +1000,25 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'from' cmdDataTarget STRING
+  // 'from' cmdData_Target STRING
   private static boolean cmdData_1_2_4_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_2_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "from");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && consumeToken(b, STRING);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // 'string' cmdDataTarget STRING NUMBER NUMBER
+  // 'string' cmdData_Target STRING NUMBER NUMBER
   private static boolean cmdData_1_2_4_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_2_4_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "string");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && consumeTokens(b, 0, STRING, NUMBER, NUMBER);
     exit_section_(b, m, null, r);
     return r;
@@ -1207,13 +1046,13 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'remove' cmdDataTarget STRING
+  // 'remove' cmdData_Target STRING
   private static boolean cmdData_1_3(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdData_1_3")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "remove");
-    r = r && cmdDataTarget(b, l + 1);
+    r = r && cmdData_Target(b, l + 1);
     r = r && consumeToken(b, STRING);
     exit_section_(b, m, null, r);
     return r;
@@ -1221,7 +1060,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
 
   /* ********************************************************** */
   // 'datapack' (('disable' IDENTIFIER) |
-  //                              ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)])
+  //                              ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]) |
   //                              ('list' ['available'|'enabled']))
   public static boolean cmdDataPack(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDataPack")) return false;
@@ -1234,7 +1073,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // ('disable' IDENTIFIER) |
-  //                              ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)])
+  //                              ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]) |
   //                              ('list' ['available'|'enabled'])
   private static boolean cmdDataPack_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDataPack_1")) return false;
@@ -1242,6 +1081,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     Marker m = enter_section_(b);
     r = cmdDataPack_1_0(b, l + 1);
     if (!r) r = cmdDataPack_1_1(b, l + 1);
+    if (!r) r = cmdDataPack_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -1257,51 +1097,39 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)])
-  //                              ('list' ['available'|'enabled'])
+  // 'enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]
   private static boolean cmdDataPack_1_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdDataPack_1_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdDataPack_1_1_0(b, l + 1);
-    r = r && cmdDataPack_1_1_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // 'enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]
-  private static boolean cmdDataPack_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
     r = consumeToken(b, "enable");
     r = r && consumeToken(b, IDENTIFIER);
-    r = r && cmdDataPack_1_1_0_2(b, l + 1);
+    r = r && cmdDataPack_1_1_2(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [('first'|'last') | (('before'|'after') IDENTIFIER)]
-  private static boolean cmdDataPack_1_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0_2")) return false;
-    cmdDataPack_1_1_0_2_0(b, l + 1);
+  private static boolean cmdDataPack_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_1_2")) return false;
+    cmdDataPack_1_1_2_0(b, l + 1);
     return true;
   }
 
   // ('first'|'last') | (('before'|'after') IDENTIFIER)
-  private static boolean cmdDataPack_1_1_0_2_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0_2_0")) return false;
+  private static boolean cmdDataPack_1_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_1_2_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdDataPack_1_1_0_2_0_0(b, l + 1);
-    if (!r) r = cmdDataPack_1_1_0_2_0_1(b, l + 1);
+    r = cmdDataPack_1_1_2_0_0(b, l + 1);
+    if (!r) r = cmdDataPack_1_1_2_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // 'first'|'last'
-  private static boolean cmdDataPack_1_1_0_2_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0_2_0_0")) return false;
+  private static boolean cmdDataPack_1_1_2_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_1_2_0_0")) return false;
     boolean r;
     r = consumeToken(b, "first");
     if (!r) r = consumeToken(b, "last");
@@ -1309,19 +1137,19 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // ('before'|'after') IDENTIFIER
-  private static boolean cmdDataPack_1_1_0_2_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0_2_0_1")) return false;
+  private static boolean cmdDataPack_1_1_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_1_2_0_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = cmdDataPack_1_1_0_2_0_1_0(b, l + 1);
+    r = cmdDataPack_1_1_2_0_1_0(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // 'before'|'after'
-  private static boolean cmdDataPack_1_1_0_2_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_0_2_0_1_0")) return false;
+  private static boolean cmdDataPack_1_1_2_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_1_2_0_1_0")) return false;
     boolean r;
     r = consumeToken(b, "before");
     if (!r) r = consumeToken(b, "after");
@@ -1329,26 +1157,26 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // 'list' ['available'|'enabled']
-  private static boolean cmdDataPack_1_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_1")) return false;
+  private static boolean cmdDataPack_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "list");
-    r = r && cmdDataPack_1_1_1_1(b, l + 1);
+    r = r && cmdDataPack_1_2_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // ['available'|'enabled']
-  private static boolean cmdDataPack_1_1_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_1_1")) return false;
-    cmdDataPack_1_1_1_1_0(b, l + 1);
+  private static boolean cmdDataPack_1_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_2_1")) return false;
+    cmdDataPack_1_2_1_0(b, l + 1);
     return true;
   }
 
   // 'available'|'enabled'
-  private static boolean cmdDataPack_1_1_1_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataPack_1_1_1_1_0")) return false;
+  private static boolean cmdDataPack_1_2_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDataPack_1_2_1_0")) return false;
     boolean r;
     r = consumeToken(b, "available");
     if (!r) r = consumeToken(b, "enabled");
@@ -1356,83 +1184,45 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // ('block' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)) |
-  //                       ('entity' (IDENTIFIER|SELECTOR)) |
-  //                       ('storage' STRING)
-  public static boolean cmdDataTarget(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget")) return false;
+  // ('block' coordinateTripe) |
+  //                        ('entity' targetSelector) |
+  //                        ('storage' STRING)
+  public static boolean cmdData_Target(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdData_Target")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_DATA_TARGET, "<cmd data target>");
-    r = cmdDataTarget_0(b, l + 1);
-    if (!r) r = cmdDataTarget_1(b, l + 1);
-    if (!r) r = cmdDataTarget_2(b, l + 1);
+    r = cmdData_Target_0(b, l + 1);
+    if (!r) r = cmdData_Target_1(b, l + 1);
+    if (!r) r = cmdData_Target_2(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // 'block' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
-  private static boolean cmdDataTarget_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_0")) return false;
+  // 'block' coordinateTripe
+  private static boolean cmdData_Target_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdData_Target_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "block");
-    r = r && cmdDataTarget_0_1(b, l + 1);
-    r = r && cmdDataTarget_0_2(b, l + 1);
-    r = r && cmdDataTarget_0_3(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // COORDINATE|NUMBER
-  private static boolean cmdDataTarget_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_0_1")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdDataTarget_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_0_2")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdDataTarget_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_0_3")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // 'entity' (IDENTIFIER|SELECTOR)
-  private static boolean cmdDataTarget_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_1")) return false;
+  // 'entity' targetSelector
+  private static boolean cmdData_Target_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdData_Target_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "entity");
-    r = r && cmdDataTarget_1_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // IDENTIFIER|SELECTOR
-  private static boolean cmdDataTarget_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_1_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
     return r;
   }
 
   // 'storage' STRING
-  private static boolean cmdDataTarget_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdDataTarget_2")) return false;
+  private static boolean cmdData_Target_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdData_Target_2")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "storage");
@@ -1442,148 +1232,63 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'fill' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) (IDENTIFIER | SELECTOR) [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' (IDENTIFIER | SELECTOR)) ]
+  // 'fill' coordinateTripe coordinateTripe targetSelector [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ]
   public static boolean cmdFill(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_FILL, "<cmd fill>");
     r = consumeToken(b, "fill");
-    r = r && cmdFill_1(b, l + 1);
-    r = r && cmdFill_2(b, l + 1);
-    r = r && cmdFill_3(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     r = r && cmdFill_4(b, l + 1);
-    r = r && cmdFill_5(b, l + 1);
-    r = r && cmdFill_6(b, l + 1);
-    r = r && cmdFill_7(b, l + 1);
-    r = r && cmdFill_8(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // COORDINATE|NUMBER
-  private static boolean cmdFill_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_1")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdFill_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_2")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdFill_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_3")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
+  // [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ]
   private static boolean cmdFill_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill_4")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdFill_5(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_5")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // COORDINATE|NUMBER
-  private static boolean cmdFill_6(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_6")) return false;
-    boolean r;
-    r = consumeToken(b, COORDINATE);
-    if (!r) r = consumeToken(b, NUMBER);
-    return r;
-  }
-
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdFill_7(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_7")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
-    return r;
-  }
-
-  // [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' (IDENTIFIER | SELECTOR)) ]
-  private static boolean cmdFill_8(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_8")) return false;
-    cmdFill_8_0(b, l + 1);
+    cmdFill_4_0(b, l + 1);
     return true;
   }
 
-  // 'destroy'|'hollow'|'keep'|'outline' | ('replace' (IDENTIFIER | SELECTOR))
-  private static boolean cmdFill_8_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_8_0")) return false;
+  // 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector)
+  private static boolean cmdFill_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFill_4_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "destroy");
     if (!r) r = consumeToken(b, "hollow");
     if (!r) r = consumeToken(b, "keep");
     if (!r) r = consumeToken(b, "outline");
-    if (!r) r = cmdFill_8_0_4(b, l + 1);
+    if (!r) r = cmdFill_4_0_4(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // 'replace' (IDENTIFIER | SELECTOR)
-  private static boolean cmdFill_8_0_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_8_0_4")) return false;
+  // 'replace' targetSelector
+  private static boolean cmdFill_4_0_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFill_4_0_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "replace");
-    r = r && cmdFill_8_0_4_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdFill_8_0_4_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdFill_8_0_4_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
     return r;
   }
 
   /* ********************************************************** */
-  // 'give' (IDENTIFIER | SELECTOR) IDENTIFIER [ NUMBER ]
+  // 'give' targetSelector IDENTIFIER [ NUMBER ]
   public static boolean cmdGive(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdGive")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_GIVE, "<cmd give>");
     r = consumeToken(b, "give");
-    r = r && cmdGive_1(b, l + 1);
+    r = r && targetSelector(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
     r = r && cmdGive_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // IDENTIFIER | SELECTOR
-  private static boolean cmdGive_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdGive_1")) return false;
-    boolean r;
-    r = consumeToken(b, IDENTIFIER);
-    if (!r) r = consumeToken(b, SELECTOR);
     return r;
   }
 
@@ -1595,23 +1300,35 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'setblock' (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER) IDENTIFIER
+  // 'setblock' coordinateTripe IDENTIFIER
   public static boolean cmdSetBlock(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdSetBlock")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_SET_BLOCK, "<cmd set block>");
     r = consumeToken(b, "setblock");
-    r = r && cmdSetBlock_1(b, l + 1);
-    r = r && cmdSetBlock_2(b, l + 1);
-    r = r && cmdSetBlock_3(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
     r = r && consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
+  /* ********************************************************** */
+  // (COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER)
+  public static boolean coordinateTripe(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "coordinateTripe")) return false;
+    if (!nextTokenIs(b, "<coordinate tripe>", COORDINATE, NUMBER)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, COORDINATE_TRIPE, "<coordinate tripe>");
+    r = coordinateTripe_0(b, l + 1);
+    r = r && coordinateTripe_1(b, l + 1);
+    r = r && coordinateTripe_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
   // COORDINATE|NUMBER
-  private static boolean cmdSetBlock_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdSetBlock_1")) return false;
+  private static boolean coordinateTripe_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "coordinateTripe_0")) return false;
     boolean r;
     r = consumeToken(b, COORDINATE);
     if (!r) r = consumeToken(b, NUMBER);
@@ -1619,8 +1336,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // COORDINATE|NUMBER
-  private static boolean cmdSetBlock_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdSetBlock_2")) return false;
+  private static boolean coordinateTripe_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "coordinateTripe_1")) return false;
     boolean r;
     r = consumeToken(b, COORDINATE);
     if (!r) r = consumeToken(b, NUMBER);
@@ -1628,8 +1345,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   // COORDINATE|NUMBER
-  private static boolean cmdSetBlock_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmdSetBlock_3")) return false;
+  private static boolean coordinateTripe_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "coordinateTripe_2")) return false;
     boolean r;
     r = consumeToken(b, COORDINATE);
     if (!r) r = consumeToken(b, NUMBER);
@@ -1653,11 +1370,13 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   // line_*
   static boolean mcFunctionFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mcFunctionFile")) return false;
+    Marker m = enter_section_(b, l, _NONE_);
     while (true) {
       int c = current_position_(b);
       if (!line_(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "mcFunctionFile", c)) break;
     }
+    exit_section_(b, l, m, true, false, McFunctionParser::statement_recover);
     return true;
   }
 
@@ -1693,6 +1412,41 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     if (!r) r = cmdDamage(b, l + 1);
     if (!r) r = cmdData(b, l + 1);
     if (!r) r = cmdDataPack(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // !("#" | CRLF | '\n' | ' ')
+  static boolean statement_recover(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_recover")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NOT_);
+    r = !statement_recover_0(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // "#" | CRLF | '\n' | ' '
+  private static boolean statement_recover_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_recover_0")) return false;
+    boolean r;
+    r = consumeToken(b, "#");
+    if (!r) r = consumeToken(b, CRLF);
+    if (!r) r = consumeToken(b, "\\n");
+    if (!r) r = consumeToken(b, " ");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // SELECTOR|IDENTIFIER
+  public static boolean targetSelector(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "targetSelector")) return false;
+    if (!nextTokenIs(b, "<target selector>", IDENTIFIER, SELECTOR)) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TARGET_SELECTOR, "<target selector>");
+    r = consumeToken(b, SELECTOR);
+    if (!r) r = consumeToken(b, IDENTIFIER);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

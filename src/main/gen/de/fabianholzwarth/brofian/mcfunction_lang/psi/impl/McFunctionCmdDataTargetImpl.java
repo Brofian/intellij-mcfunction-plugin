@@ -27,4 +27,16 @@ public class McFunctionCmdDataTargetImpl extends ASTWrapperPsiElement implements
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public McFunctionCoordinateTripe getCoordinateTripe() {
+    return findChildByClass(McFunctionCoordinateTripe.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionTargetSelector getTargetSelector() {
+    return findChildByClass(McFunctionTargetSelector.class);
+  }
+
 }
