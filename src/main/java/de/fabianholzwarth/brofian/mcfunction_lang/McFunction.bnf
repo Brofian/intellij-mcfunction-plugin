@@ -21,20 +21,18 @@
 }
 
 // each file consists from an set of lines
-mcFunctionFile ::= line_* {
-    recoverWhile=statement_recover
-}
+mcFunctionFile ::= line_* // {recoverWhile=statement_recover}
 
 // todo: recovery rule does not apply. The parsing is still stopped at the first error
-private statement_recover ::= !("#" | CRLF | '\n' | ' ')
+// private statement_recover ::= !(CRLF|'\n'|COMMAND)
 
 
 // each line can either be a comment, an empty line break, or a property with a line break
 line_ ::= (property|COMMENT|CRLF)
 
 // the available properties are the possible commands
-property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdSetBlock | cmdGive | cmdFill |
-              cmdClone | cmdDamage | cmdData | cmdDataPack) {
+property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdClone | cmdDamage | cmdData | cmdDataPack | cmdDebug | cmdDefaultGameMode | cmdDifficulty | cmdEffect | cmdEnchant |
+              cmdExperience | cmdFill | cmdFillBiome | cmdForceLoad | cmdFunction | cmdGameRule | cmdGameMode | cmdGive | cmdSetBlock ) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
@@ -47,19 +45,20 @@ unused ::= OPERATOR
 // shortcuts for frequently used sequences
 coordinateTripe ::= ((COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER))
 targetSelector ::= (SELECTOR|IDENTIFIER)
+extendedIdentifier ::= (IDENTIFIER[JSON])
 
 
 // the command definitions
 cmdAdvancement ::= ('advancement' ('revoke'|'grant') targetSelector ('everything' |
                                                                      (('from'|'through'|'until') IDENTIFIER) |
-                                                                     ('only' IDENTIFIER [ IDENTIFIER ])))
+                                                                     ('only' IDENTIFIER [ IDENTIFIER ]))) 
 cmdAttribute ::= ('attribute' targetSelector IDENTIFIER (('get' NUMBER) |
                                                          ('base' ('get' [NUMBER] |'set' NUMBER)) |
                                                          ('modifier' (
                                                             ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
                                                             ('remove' IDENTIFIER) |
-                                                            ('value' 'get' IDENTIFIER [NUMBER])))))
-cmdBan ::= ('ban' targetSelector [STRING])
+                                                            ('value' 'get' IDENTIFIER [NUMBER]))))) 
+cmdBan ::= ('ban' targetSelector [STRING]) 
 cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                            ('get' IDENTIFIER ('max'|'players'|'value'|'visible')) |
                            ('list') |
@@ -72,15 +71,15 @@ cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
                                 ('value' NUMBER) |
                                 ('visible' ('true'|'false'))
-                           ))))
-cmdClear ::= ('clear' [SELECTOR [IDENTIFIER [NUMBER]]])
+                           )))) 
+cmdClear ::= ('clear' [SELECTOR [extendedIdentifier [NUMBER]]])
 cmdClone ::= ('clone' ['from' IDENTIFIER] coordinateTripe coordinateTripe
                       ['to' IDENTIFIER]   coordinateTripe
                       [ (('replace'|'masked') ['force'|'move'|'normal']) |
                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
-                      ])
+                      ]) 
 cmdDamage ::= ('damage' targetSelector NUMBER [IDENTIFIER [('at' coordinateTripe) |
-                                                           ('by' IDENTIFIER ['from' IDENTIFIER])]])
+                                                           ('by' IDENTIFIER ['from' IDENTIFIER])]]) 
 cmdData ::= ('data' (('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
                      ('merge' cmdData_Target JSON) |
                      ('modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
@@ -97,6 +96,26 @@ cmdDataPack ::= ('datapack' (('disable' IDENTIFIER) |
                              ('list' ['available'|'enabled'])))
 
 
+cmdDebug ::= ('debug' ('start' | 'stop' | ('function' IDENTIFIER)))
+cmdDefaultGameMode ::= ('defaultgamemode' ('survival'|'creative'|'adventure'|'spectator'))
+cmdDifficulty ::= ('difficulty' ['peaceful'|'easy'|'normal'|'hard'])
+cmdEffect ::= ('effect' (('clear' [targetSelector [IDENTIFIER]]) |
+                         ('give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER ['true'|'false']]])))
+cmdEnchant ::= ('enchant' targetSelector IDENTIFIER [NUMBER])
+cmdExperience ::= (('enchant'|'xp') (('query' targetSelector ('levels'|'points')) |
+                                     (('add'|'set') targetSelector ['levels'|'points'])))
+cmdFill ::= ('fill' coordinateTripe coordinateTripe extendedIdentifier [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER) ])
+cmdFillBiome ::= ('fillbiome' coordinateTripe coordinateTripe IDENTIFIER ['replace' IDENTIFIER])
+cmdForceLoad ::= ('forceload' (('add' COORDINATE COORDINATE [COORDINATE COORDINATE]) |
+                               ('remove' ('all'| (COORDINATE COORDINATE [COORDINATE COORDINATE]))) |
+                               ('query' COORDINATE COORDINATE)))
+cmdFunction ::= ('function' IDENTIFIER)
+cmdGameMode ::= ('gamemode' ('survival'|'creative'|'adventure'|'spectator') [targetSelector])
+cmdGameRule ::= ('gamerule' IDENTIFIER [NUMBER|'true'|'false'])
+cmdGive ::= ('give' targetSelector extendedIdentifier [ NUMBER ] )
+
+
+
 cmdSetBlock ::= ('setblock' coordinateTripe IDENTIFIER)
-cmdFill ::= ('fill' coordinateTripe coordinateTripe targetSelector [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ])
-cmdGive ::= ('give' targetSelector IDENTIFIER [ NUMBER ] )
+
+

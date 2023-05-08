@@ -559,7 +559,7 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'clear' [SELECTOR [IDENTIFIER [NUMBER]]]
+  // 'clear' [SELECTOR [extendedIdentifier [NUMBER]]]
   public static boolean cmdClear(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdClear")) return false;
     boolean r;
@@ -570,14 +570,14 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [SELECTOR [IDENTIFIER [NUMBER]]]
+  // [SELECTOR [extendedIdentifier [NUMBER]]]
   private static boolean cmdClear_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdClear_1")) return false;
     cmdClear_1_0(b, l + 1);
     return true;
   }
 
-  // SELECTOR [IDENTIFIER [NUMBER]]
+  // SELECTOR [extendedIdentifier [NUMBER]]
   private static boolean cmdClear_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdClear_1_0")) return false;
     boolean r;
@@ -588,19 +588,19 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [IDENTIFIER [NUMBER]]
+  // [extendedIdentifier [NUMBER]]
   private static boolean cmdClear_1_0_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdClear_1_0_1")) return false;
     cmdClear_1_0_1_0(b, l + 1);
     return true;
   }
 
-  // IDENTIFIER [NUMBER]
+  // extendedIdentifier [NUMBER]
   private static boolean cmdClear_1_0_1_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdClear_1_0_1_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = consumeToken(b, IDENTIFIER);
+    r = extendedIdentifier(b, l + 1);
     r = r && cmdClear_1_0_1_0_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
@@ -1232,7 +1232,343 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // 'fill' coordinateTripe coordinateTripe targetSelector [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ]
+  // 'debug' ('start' | 'stop' | ('function' IDENTIFIER))
+  public static boolean cmdDebug(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDebug")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_DEBUG, "<cmd debug>");
+    r = consumeToken(b, "debug");
+    r = r && cmdDebug_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // 'start' | 'stop' | ('function' IDENTIFIER)
+  private static boolean cmdDebug_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDebug_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "start");
+    if (!r) r = consumeToken(b, "stop");
+    if (!r) r = cmdDebug_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'function' IDENTIFIER
+  private static boolean cmdDebug_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDebug_1_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "function");
+    r = r && consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'defaultgamemode' ('survival'|'creative'|'adventure'|'spectator')
+  public static boolean cmdDefaultGameMode(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDefaultGameMode")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_DEFAULT_GAME_MODE, "<cmd default game mode>");
+    r = consumeToken(b, "defaultgamemode");
+    r = r && cmdDefaultGameMode_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // 'survival'|'creative'|'adventure'|'spectator'
+  private static boolean cmdDefaultGameMode_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDefaultGameMode_1")) return false;
+    boolean r;
+    r = consumeToken(b, "survival");
+    if (!r) r = consumeToken(b, "creative");
+    if (!r) r = consumeToken(b, "adventure");
+    if (!r) r = consumeToken(b, "spectator");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'difficulty' ['peaceful'|'easy'|'normal'|'hard']
+  public static boolean cmdDifficulty(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDifficulty")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_DIFFICULTY, "<cmd difficulty>");
+    r = consumeToken(b, "difficulty");
+    r = r && cmdDifficulty_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ['peaceful'|'easy'|'normal'|'hard']
+  private static boolean cmdDifficulty_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDifficulty_1")) return false;
+    cmdDifficulty_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'peaceful'|'easy'|'normal'|'hard'
+  private static boolean cmdDifficulty_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdDifficulty_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, "peaceful");
+    if (!r) r = consumeToken(b, "easy");
+    if (!r) r = consumeToken(b, "normal");
+    if (!r) r = consumeToken(b, "hard");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'effect' (('clear' [targetSelector [IDENTIFIER]]) |
+  //                          ('give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER ['true'|'false']]]))
+  public static boolean cmdEffect(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_EFFECT, "<cmd effect>");
+    r = consumeToken(b, "effect");
+    r = r && cmdEffect_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ('clear' [targetSelector [IDENTIFIER]]) |
+  //                          ('give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER ['true'|'false']]])
+  private static boolean cmdEffect_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdEffect_1_0(b, l + 1);
+    if (!r) r = cmdEffect_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'clear' [targetSelector [IDENTIFIER]]
+  private static boolean cmdEffect_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "clear");
+    r = r && cmdEffect_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [targetSelector [IDENTIFIER]]
+  private static boolean cmdEffect_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_0_1")) return false;
+    cmdEffect_1_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // targetSelector [IDENTIFIER]
+  private static boolean cmdEffect_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = targetSelector(b, l + 1);
+    r = r && cmdEffect_1_0_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [IDENTIFIER]
+  private static boolean cmdEffect_1_0_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_0_1_0_1")) return false;
+    consumeToken(b, IDENTIFIER);
+    return true;
+  }
+
+  // 'give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER ['true'|'false']]]
+  private static boolean cmdEffect_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "give");
+    r = r && targetSelector(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && cmdEffect_1_1_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [(NUMBER|'infinite') [NUMBER ['true'|'false']]]
+  private static boolean cmdEffect_1_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3")) return false;
+    cmdEffect_1_1_3_0(b, l + 1);
+    return true;
+  }
+
+  // (NUMBER|'infinite') [NUMBER ['true'|'false']]
+  private static boolean cmdEffect_1_1_3_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdEffect_1_1_3_0_0(b, l + 1);
+    r = r && cmdEffect_1_1_3_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // NUMBER|'infinite'
+  private static boolean cmdEffect_1_1_3_0_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0_0")) return false;
+    boolean r;
+    r = consumeToken(b, NUMBER);
+    if (!r) r = consumeToken(b, "infinite");
+    return r;
+  }
+
+  // [NUMBER ['true'|'false']]
+  private static boolean cmdEffect_1_1_3_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0_1")) return false;
+    cmdEffect_1_1_3_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // NUMBER ['true'|'false']
+  private static boolean cmdEffect_1_1_3_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, NUMBER);
+    r = r && cmdEffect_1_1_3_0_1_0_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // ['true'|'false']
+  private static boolean cmdEffect_1_1_3_0_1_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0_1_0_1")) return false;
+    cmdEffect_1_1_3_0_1_0_1_0(b, l + 1);
+    return true;
+  }
+
+  // 'true'|'false'
+  private static boolean cmdEffect_1_1_3_0_1_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEffect_1_1_3_0_1_0_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, "true");
+    if (!r) r = consumeToken(b, "false");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'enchant' targetSelector IDENTIFIER [NUMBER]
+  public static boolean cmdEnchant(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEnchant")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_ENCHANT, "<cmd enchant>");
+    r = consumeToken(b, "enchant");
+    r = r && targetSelector(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && cmdEnchant_3(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [NUMBER]
+  private static boolean cmdEnchant_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdEnchant_3")) return false;
+    consumeToken(b, NUMBER);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // ('enchant'|'xp') (('query' targetSelector ('levels'|'points')) |
+  //                                      (('add'|'set') targetSelector ['levels'|'points']))
+  public static boolean cmdExperience(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_EXPERIENCE, "<cmd experience>");
+    r = cmdExperience_0(b, l + 1);
+    r = r && cmdExperience_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // 'enchant'|'xp'
+  private static boolean cmdExperience_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_0")) return false;
+    boolean r;
+    r = consumeToken(b, "enchant");
+    if (!r) r = consumeToken(b, "xp");
+    return r;
+  }
+
+  // ('query' targetSelector ('levels'|'points')) |
+  //                                      (('add'|'set') targetSelector ['levels'|'points'])
+  private static boolean cmdExperience_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdExperience_1_0(b, l + 1);
+    if (!r) r = cmdExperience_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'query' targetSelector ('levels'|'points')
+  private static boolean cmdExperience_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "query");
+    r = r && targetSelector(b, l + 1);
+    r = r && cmdExperience_1_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'levels'|'points'
+  private static boolean cmdExperience_1_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_0_2")) return false;
+    boolean r;
+    r = consumeToken(b, "levels");
+    if (!r) r = consumeToken(b, "points");
+    return r;
+  }
+
+  // ('add'|'set') targetSelector ['levels'|'points']
+  private static boolean cmdExperience_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdExperience_1_1_0(b, l + 1);
+    r = r && targetSelector(b, l + 1);
+    r = r && cmdExperience_1_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'add'|'set'
+  private static boolean cmdExperience_1_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_1_0")) return false;
+    boolean r;
+    r = consumeToken(b, "add");
+    if (!r) r = consumeToken(b, "set");
+    return r;
+  }
+
+  // ['levels'|'points']
+  private static boolean cmdExperience_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_1_2")) return false;
+    cmdExperience_1_1_2_0(b, l + 1);
+    return true;
+  }
+
+  // 'levels'|'points'
+  private static boolean cmdExperience_1_1_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdExperience_1_1_2_0")) return false;
+    boolean r;
+    r = consumeToken(b, "levels");
+    if (!r) r = consumeToken(b, "points");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'fill' coordinateTripe coordinateTripe extendedIdentifier [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER) ]
   public static boolean cmdFill(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill")) return false;
     boolean r;
@@ -1240,20 +1576,20 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     r = consumeToken(b, "fill");
     r = r && coordinateTripe(b, l + 1);
     r = r && coordinateTripe(b, l + 1);
-    r = r && targetSelector(b, l + 1);
+    r = r && extendedIdentifier(b, l + 1);
     r = r && cmdFill_4(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
 
-  // [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector) ]
+  // [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER) ]
   private static boolean cmdFill_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill_4")) return false;
     cmdFill_4_0(b, l + 1);
     return true;
   }
 
-  // 'destroy'|'hollow'|'keep'|'outline' | ('replace' targetSelector)
+  // 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER)
   private static boolean cmdFill_4_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill_4_0")) return false;
     boolean r;
@@ -1267,26 +1603,230 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // 'replace' targetSelector
+  // 'replace' IDENTIFIER
   private static boolean cmdFill_4_0_4(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdFill_4_0_4")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, "replace");
-    r = r && targetSelector(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
     exit_section_(b, m, null, r);
     return r;
   }
 
   /* ********************************************************** */
-  // 'give' targetSelector IDENTIFIER [ NUMBER ]
+  // 'fillbiome' coordinateTripe coordinateTripe IDENTIFIER ['replace' IDENTIFIER]
+  public static boolean cmdFillBiome(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFillBiome")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_FILL_BIOME, "<cmd fill biome>");
+    r = consumeToken(b, "fillbiome");
+    r = r && coordinateTripe(b, l + 1);
+    r = r && coordinateTripe(b, l + 1);
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && cmdFillBiome_4(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ['replace' IDENTIFIER]
+  private static boolean cmdFillBiome_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFillBiome_4")) return false;
+    cmdFillBiome_4_0(b, l + 1);
+    return true;
+  }
+
+  // 'replace' IDENTIFIER
+  private static boolean cmdFillBiome_4_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFillBiome_4_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "replace");
+    r = r && consumeToken(b, IDENTIFIER);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'forceload' (('add' COORDINATE COORDINATE [COORDINATE COORDINATE]) |
+  //                                ('remove' ('all'| (COORDINATE COORDINATE [COORDINATE COORDINATE]))) |
+  //                                ('query' COORDINATE COORDINATE))
+  public static boolean cmdForceLoad(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_FORCE_LOAD, "<cmd force load>");
+    r = consumeToken(b, "forceload");
+    r = r && cmdForceLoad_1(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // ('add' COORDINATE COORDINATE [COORDINATE COORDINATE]) |
+  //                                ('remove' ('all'| (COORDINATE COORDINATE [COORDINATE COORDINATE]))) |
+  //                                ('query' COORDINATE COORDINATE)
+  private static boolean cmdForceLoad_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = cmdForceLoad_1_0(b, l + 1);
+    if (!r) r = cmdForceLoad_1_1(b, l + 1);
+    if (!r) r = cmdForceLoad_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'add' COORDINATE COORDINATE [COORDINATE COORDINATE]
+  private static boolean cmdForceLoad_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "add");
+    r = r && consumeTokens(b, 0, COORDINATE, COORDINATE);
+    r = r && cmdForceLoad_1_0_3(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [COORDINATE COORDINATE]
+  private static boolean cmdForceLoad_1_0_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_0_3")) return false;
+    parseTokens(b, 0, COORDINATE, COORDINATE);
+    return true;
+  }
+
+  // 'remove' ('all'| (COORDINATE COORDINATE [COORDINATE COORDINATE]))
+  private static boolean cmdForceLoad_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "remove");
+    r = r && cmdForceLoad_1_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // 'all'| (COORDINATE COORDINATE [COORDINATE COORDINATE])
+  private static boolean cmdForceLoad_1_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "all");
+    if (!r) r = cmdForceLoad_1_1_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COORDINATE COORDINATE [COORDINATE COORDINATE]
+  private static boolean cmdForceLoad_1_1_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_1_1_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, COORDINATE, COORDINATE);
+    r = r && cmdForceLoad_1_1_1_1_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // [COORDINATE COORDINATE]
+  private static boolean cmdForceLoad_1_1_1_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_1_1_1_2")) return false;
+    parseTokens(b, 0, COORDINATE, COORDINATE);
+    return true;
+  }
+
+  // 'query' COORDINATE COORDINATE
+  private static boolean cmdForceLoad_1_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdForceLoad_1_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, "query");
+    r = r && consumeTokens(b, 0, COORDINATE, COORDINATE);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'function' IDENTIFIER
+  public static boolean cmdFunction(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdFunction")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_FUNCTION, "<cmd function>");
+    r = consumeToken(b, "function");
+    r = r && consumeToken(b, IDENTIFIER);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'gamemode' ('survival'|'creative'|'adventure'|'spectator') [targetSelector]
+  public static boolean cmdGameMode(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameMode")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_GAME_MODE, "<cmd game mode>");
+    r = consumeToken(b, "gamemode");
+    r = r && cmdGameMode_1(b, l + 1);
+    r = r && cmdGameMode_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // 'survival'|'creative'|'adventure'|'spectator'
+  private static boolean cmdGameMode_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameMode_1")) return false;
+    boolean r;
+    r = consumeToken(b, "survival");
+    if (!r) r = consumeToken(b, "creative");
+    if (!r) r = consumeToken(b, "adventure");
+    if (!r) r = consumeToken(b, "spectator");
+    return r;
+  }
+
+  // [targetSelector]
+  private static boolean cmdGameMode_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameMode_2")) return false;
+    targetSelector(b, l + 1);
+    return true;
+  }
+
+  /* ********************************************************** */
+  // 'gamerule' IDENTIFIER [NUMBER|'true'|'false']
+  public static boolean cmdGameRule(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameRule")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, CMD_GAME_RULE, "<cmd game rule>");
+    r = consumeToken(b, "gamerule");
+    r = r && consumeToken(b, IDENTIFIER);
+    r = r && cmdGameRule_2(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
+    return r;
+  }
+
+  // [NUMBER|'true'|'false']
+  private static boolean cmdGameRule_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameRule_2")) return false;
+    cmdGameRule_2_0(b, l + 1);
+    return true;
+  }
+
+  // NUMBER|'true'|'false'
+  private static boolean cmdGameRule_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "cmdGameRule_2_0")) return false;
+    boolean r;
+    r = consumeToken(b, NUMBER);
+    if (!r) r = consumeToken(b, "true");
+    if (!r) r = consumeToken(b, "false");
+    return r;
+  }
+
+  /* ********************************************************** */
+  // 'give' targetSelector extendedIdentifier [ NUMBER ]
   public static boolean cmdGive(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmdGive")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_GIVE, "<cmd give>");
     r = consumeToken(b, "give");
     r = r && targetSelector(b, l + 1);
-    r = r && consumeToken(b, IDENTIFIER);
+    r = r && extendedIdentifier(b, l + 1);
     r = r && cmdGive_3(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
@@ -1354,6 +1894,26 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // IDENTIFIER[JSON]
+  public static boolean extendedIdentifier(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "extendedIdentifier")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, IDENTIFIER);
+    r = r && extendedIdentifier_1(b, l + 1);
+    exit_section_(b, m, EXTENDED_IDENTIFIER, r);
+    return r;
+  }
+
+  // [JSON]
+  private static boolean extendedIdentifier_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "extendedIdentifier_1")) return false;
+    consumeToken(b, JSON);
+    return true;
+  }
+
+  /* ********************************************************** */
   // property|COMMENT|CRLF
   public static boolean line_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "line_")) return false;
@@ -1370,13 +1930,11 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   // line_*
   static boolean mcFunctionFile(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "mcFunctionFile")) return false;
-    Marker m = enter_section_(b, l, _NONE_);
     while (true) {
       int c = current_position_(b);
       if (!line_(b, l + 1)) break;
       if (!empty_element_parsed_guard_(b, "mcFunctionFile", c)) break;
     }
-    exit_section_(b, l, m, true, false, McFunctionParser::statement_recover);
     return true;
   }
 
@@ -1394,8 +1952,8 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdSetBlock | cmdGive | cmdFill |
-  //               cmdClone | cmdDamage | cmdData | cmdDataPack
+  // cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdClone | cmdDamage | cmdData | cmdDataPack | cmdDebug | cmdDefaultGameMode | cmdDifficulty | cmdEffect | cmdEnchant |
+  //               cmdExperience | cmdFill | cmdFillBiome | cmdForceLoad | cmdFunction | cmdGameRule | cmdGameMode | cmdGive | cmdSetBlock
   public static boolean property(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "property")) return false;
     boolean r;
@@ -1405,36 +1963,25 @@ public class McFunctionParser implements PsiParser, LightPsiParser {
     if (!r) r = cmdBan(b, l + 1);
     if (!r) r = cmdBossBar(b, l + 1);
     if (!r) r = cmdClear(b, l + 1);
-    if (!r) r = cmdSetBlock(b, l + 1);
-    if (!r) r = cmdGive(b, l + 1);
-    if (!r) r = cmdFill(b, l + 1);
     if (!r) r = cmdClone(b, l + 1);
     if (!r) r = cmdDamage(b, l + 1);
     if (!r) r = cmdData(b, l + 1);
     if (!r) r = cmdDataPack(b, l + 1);
+    if (!r) r = cmdDebug(b, l + 1);
+    if (!r) r = cmdDefaultGameMode(b, l + 1);
+    if (!r) r = cmdDifficulty(b, l + 1);
+    if (!r) r = cmdEffect(b, l + 1);
+    if (!r) r = cmdEnchant(b, l + 1);
+    if (!r) r = cmdExperience(b, l + 1);
+    if (!r) r = cmdFill(b, l + 1);
+    if (!r) r = cmdFillBiome(b, l + 1);
+    if (!r) r = cmdForceLoad(b, l + 1);
+    if (!r) r = cmdFunction(b, l + 1);
+    if (!r) r = cmdGameRule(b, l + 1);
+    if (!r) r = cmdGameMode(b, l + 1);
+    if (!r) r = cmdGive(b, l + 1);
+    if (!r) r = cmdSetBlock(b, l + 1);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // !("#" | CRLF | '\n' | ' ')
-  static boolean statement_recover(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_recover")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NOT_);
-    r = !statement_recover_0(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  // "#" | CRLF | '\n' | ' '
-  private static boolean statement_recover_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "statement_recover_0")) return false;
-    boolean r;
-    r = consumeToken(b, "#");
-    if (!r) r = consumeToken(b, CRLF);
-    if (!r) r = consumeToken(b, "\\n");
-    if (!r) r = consumeToken(b, " ");
     return r;
   }
 

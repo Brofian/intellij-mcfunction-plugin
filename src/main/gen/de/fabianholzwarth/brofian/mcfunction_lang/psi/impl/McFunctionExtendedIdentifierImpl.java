@@ -11,32 +11,20 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionCmdFillImpl extends ASTWrapperPsiElement implements McFunctionCmdFill {
+public class McFunctionExtendedIdentifierImpl extends ASTWrapperPsiElement implements McFunctionExtendedIdentifier {
 
-  public McFunctionCmdFillImpl(@NotNull ASTNode node) {
+  public McFunctionExtendedIdentifierImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitCmdFill(this);
+    visitor.visitExtendedIdentifier(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof McFunctionVisitor) accept((McFunctionVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @NotNull
-  public List<McFunctionCoordinateTripe> getCoordinateTripeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, McFunctionCoordinateTripe.class);
-  }
-
-  @Override
-  @NotNull
-  public McFunctionExtendedIdentifier getExtendedIdentifier() {
-    return findNotNullChildByClass(McFunctionExtendedIdentifier.class);
   }
 
 }

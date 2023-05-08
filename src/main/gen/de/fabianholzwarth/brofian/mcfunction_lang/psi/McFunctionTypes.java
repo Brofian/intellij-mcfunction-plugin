@@ -18,10 +18,22 @@ public interface McFunctionTypes {
   IElementType CMD_DATA = new McFunctionElementType("CMD_DATA");
   IElementType CMD_DATA_PACK = new McFunctionElementType("CMD_DATA_PACK");
   IElementType CMD_DATA_TARGET = new McFunctionElementType("CMD_DATA_TARGET");
+  IElementType CMD_DEBUG = new McFunctionElementType("CMD_DEBUG");
+  IElementType CMD_DEFAULT_GAME_MODE = new McFunctionElementType("CMD_DEFAULT_GAME_MODE");
+  IElementType CMD_DIFFICULTY = new McFunctionElementType("CMD_DIFFICULTY");
+  IElementType CMD_EFFECT = new McFunctionElementType("CMD_EFFECT");
+  IElementType CMD_ENCHANT = new McFunctionElementType("CMD_ENCHANT");
+  IElementType CMD_EXPERIENCE = new McFunctionElementType("CMD_EXPERIENCE");
   IElementType CMD_FILL = new McFunctionElementType("CMD_FILL");
+  IElementType CMD_FILL_BIOME = new McFunctionElementType("CMD_FILL_BIOME");
+  IElementType CMD_FORCE_LOAD = new McFunctionElementType("CMD_FORCE_LOAD");
+  IElementType CMD_FUNCTION = new McFunctionElementType("CMD_FUNCTION");
+  IElementType CMD_GAME_MODE = new McFunctionElementType("CMD_GAME_MODE");
+  IElementType CMD_GAME_RULE = new McFunctionElementType("CMD_GAME_RULE");
   IElementType CMD_GIVE = new McFunctionElementType("CMD_GIVE");
   IElementType CMD_SET_BLOCK = new McFunctionElementType("CMD_SET_BLOCK");
   IElementType COORDINATE_TRIPE = new McFunctionElementType("COORDINATE_TRIPE");
+  IElementType EXTENDED_IDENTIFIER = new McFunctionElementType("EXTENDED_IDENTIFIER");
   IElementType LINE_ = new McFunctionElementType("LINE_");
   IElementType PLACEHOLDER = new McFunctionElementType("PLACEHOLDER");
   IElementType PROPERTY = new McFunctionElementType("PROPERTY");
@@ -75,8 +87,41 @@ public interface McFunctionTypes {
       else if (type == CMD_DATA_TARGET) {
         return new McFunctionCmdDataTargetImpl(node);
       }
+      else if (type == CMD_DEBUG) {
+        return new McFunctionCmdDebugImpl(node);
+      }
+      else if (type == CMD_DEFAULT_GAME_MODE) {
+        return new McFunctionCmdDefaultGameModeImpl(node);
+      }
+      else if (type == CMD_DIFFICULTY) {
+        return new McFunctionCmdDifficultyImpl(node);
+      }
+      else if (type == CMD_EFFECT) {
+        return new McFunctionCmdEffectImpl(node);
+      }
+      else if (type == CMD_ENCHANT) {
+        return new McFunctionCmdEnchantImpl(node);
+      }
+      else if (type == CMD_EXPERIENCE) {
+        return new McFunctionCmdExperienceImpl(node);
+      }
       else if (type == CMD_FILL) {
         return new McFunctionCmdFillImpl(node);
+      }
+      else if (type == CMD_FILL_BIOME) {
+        return new McFunctionCmdFillBiomeImpl(node);
+      }
+      else if (type == CMD_FORCE_LOAD) {
+        return new McFunctionCmdForceLoadImpl(node);
+      }
+      else if (type == CMD_FUNCTION) {
+        return new McFunctionCmdFunctionImpl(node);
+      }
+      else if (type == CMD_GAME_MODE) {
+        return new McFunctionCmdGameModeImpl(node);
+      }
+      else if (type == CMD_GAME_RULE) {
+        return new McFunctionCmdGameRuleImpl(node);
       }
       else if (type == CMD_GIVE) {
         return new McFunctionCmdGiveImpl(node);
@@ -86,6 +131,9 @@ public interface McFunctionTypes {
       }
       else if (type == COORDINATE_TRIPE) {
         return new McFunctionCoordinateTripeImpl(node);
+      }
+      else if (type == EXTENDED_IDENTIFIER) {
+        return new McFunctionExtendedIdentifierImpl(node);
       }
       else if (type == LINE_) {
         return new McFunctionLine_Impl(node);

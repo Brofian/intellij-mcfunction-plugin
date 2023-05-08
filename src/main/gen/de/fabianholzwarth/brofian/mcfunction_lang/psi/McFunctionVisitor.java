@@ -47,7 +47,51 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCmdDebug(@NotNull McFunctionCmdDebug o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdDefaultGameMode(@NotNull McFunctionCmdDefaultGameMode o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdDifficulty(@NotNull McFunctionCmdDifficulty o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdEffect(@NotNull McFunctionCmdEffect o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdEnchant(@NotNull McFunctionCmdEnchant o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdExperience(@NotNull McFunctionCmdExperience o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdFill(@NotNull McFunctionCmdFill o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdFillBiome(@NotNull McFunctionCmdFillBiome o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdForceLoad(@NotNull McFunctionCmdForceLoad o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdFunction(@NotNull McFunctionCmdFunction o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdGameMode(@NotNull McFunctionCmdGameMode o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdGameRule(@NotNull McFunctionCmdGameRule o) {
     visitPsiElement(o);
   }
 
@@ -60,6 +104,10 @@ public class McFunctionVisitor extends PsiElementVisitor {
   }
 
   public void visitCoordinateTripe(@NotNull McFunctionCoordinateTripe o) {
+    visitPsiElement(o);
+  }
+
+  public void visitExtendedIdentifier(@NotNull McFunctionExtendedIdentifier o) {
     visitPsiElement(o);
   }
 

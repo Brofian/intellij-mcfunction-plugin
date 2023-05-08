@@ -27,4 +27,10 @@ public class McFunctionCmdClearImpl extends ASTWrapperPsiElement implements McFu
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public McFunctionExtendedIdentifier getExtendedIdentifier() {
+    return findChildByClass(McFunctionExtendedIdentifier.class);
+  }
+
 }

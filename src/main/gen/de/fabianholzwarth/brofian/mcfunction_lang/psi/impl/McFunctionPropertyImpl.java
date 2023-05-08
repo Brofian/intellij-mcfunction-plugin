@@ -82,8 +82,74 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
 
   @Override
   @Nullable
+  public McFunctionCmdDebug getCmdDebug() {
+    return findChildByClass(McFunctionCmdDebug.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdDefaultGameMode getCmdDefaultGameMode() {
+    return findChildByClass(McFunctionCmdDefaultGameMode.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdDifficulty getCmdDifficulty() {
+    return findChildByClass(McFunctionCmdDifficulty.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdEffect getCmdEffect() {
+    return findChildByClass(McFunctionCmdEffect.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdEnchant getCmdEnchant() {
+    return findChildByClass(McFunctionCmdEnchant.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdExperience getCmdExperience() {
+    return findChildByClass(McFunctionCmdExperience.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionCmdFill getCmdFill() {
     return findChildByClass(McFunctionCmdFill.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdFillBiome getCmdFillBiome() {
+    return findChildByClass(McFunctionCmdFillBiome.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdForceLoad getCmdForceLoad() {
+    return findChildByClass(McFunctionCmdForceLoad.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdFunction getCmdFunction() {
+    return findChildByClass(McFunctionCmdFunction.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdGameMode getCmdGameMode() {
+    return findChildByClass(McFunctionCmdGameMode.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdGameRule getCmdGameRule() {
+    return findChildByClass(McFunctionCmdGameRule.class);
   }
 
   @Override

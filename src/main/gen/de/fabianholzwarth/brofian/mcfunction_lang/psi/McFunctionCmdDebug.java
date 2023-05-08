@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface McFunctionCmdGive extends PsiElement {
-
-  @NotNull
-  McFunctionExtendedIdentifier getExtendedIdentifier();
-
-  @NotNull
-  McFunctionTargetSelector getTargetSelector();
+public interface McFunctionCmdDebug extends PsiElement {
 
 }

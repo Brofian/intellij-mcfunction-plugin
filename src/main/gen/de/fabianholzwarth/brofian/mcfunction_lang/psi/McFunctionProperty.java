@@ -35,7 +35,40 @@ public interface McFunctionProperty extends McFunctionNamedElement {
   McFunctionCmdDataPack getCmdDataPack();
 
   @Nullable
+  McFunctionCmdDebug getCmdDebug();
+
+  @Nullable
+  McFunctionCmdDefaultGameMode getCmdDefaultGameMode();
+
+  @Nullable
+  McFunctionCmdDifficulty getCmdDifficulty();
+
+  @Nullable
+  McFunctionCmdEffect getCmdEffect();
+
+  @Nullable
+  McFunctionCmdEnchant getCmdEnchant();
+
+  @Nullable
+  McFunctionCmdExperience getCmdExperience();
+
+  @Nullable
   McFunctionCmdFill getCmdFill();
+
+  @Nullable
+  McFunctionCmdFillBiome getCmdFillBiome();
+
+  @Nullable
+  McFunctionCmdForceLoad getCmdForceLoad();
+
+  @Nullable
+  McFunctionCmdFunction getCmdFunction();
+
+  @Nullable
+  McFunctionCmdGameMode getCmdGameMode();
+
+  @Nullable
+  McFunctionCmdGameRule getCmdGameRule();
 
   @Nullable
   McFunctionCmdGive getCmdGive();

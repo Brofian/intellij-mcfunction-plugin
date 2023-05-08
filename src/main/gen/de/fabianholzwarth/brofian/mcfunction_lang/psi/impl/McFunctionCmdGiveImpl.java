@@ -29,6 +29,12 @@ public class McFunctionCmdGiveImpl extends ASTWrapperPsiElement implements McFun
 
   @Override
   @NotNull
+  public McFunctionExtendedIdentifier getExtendedIdentifier() {
+    return findNotNullChildByClass(McFunctionExtendedIdentifier.class);
+  }
+
+  @Override
+  @NotNull
   public McFunctionTargetSelector getTargetSelector() {
     return findNotNullChildByClass(McFunctionTargetSelector.class);
   }

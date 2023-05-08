@@ -11,6 +11,6 @@ public interface McFunctionCmdFill extends PsiElement {
   List<McFunctionCoordinateTripe> getCoordinateTripeList();
 
   @NotNull
-  List<McFunctionTargetSelector> getTargetSelectorList();
+  McFunctionExtendedIdentifier getExtendedIdentifier();
 
 }
