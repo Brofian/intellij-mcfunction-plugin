@@ -11,20 +11,38 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionCoordinateTripeImpl extends ASTWrapperPsiElement implements McFunctionCoordinateTripe {
+public class McFunctionCmdLootSourceImpl extends ASTWrapperPsiElement implements McFunctionCmdLootSource {
 
-  public McFunctionCoordinateTripeImpl(@NotNull ASTNode node) {
+  public McFunctionCmdLootSourceImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitCoordinateTripe(this);
+    visitor.visitCmdLootSource(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof McFunctionVisitor) accept((McFunctionVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCoordinateTriple getCoordinateTriple() {
+    return findChildByClass(McFunctionCoordinateTriple.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionExtendedIdentifier getExtendedIdentifier() {
+    return findChildByClass(McFunctionExtendedIdentifier.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionTargetSelector getTargetSelector() {
+    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

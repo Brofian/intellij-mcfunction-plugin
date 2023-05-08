@@ -8,6 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface McFunctionCmdFillBiome extends PsiElement {
 
   @NotNull
-  List<McFunctionCoordinateTripe> getCoordinateTripeList();
+  List<McFunctionCoordinateTriple> getCoordinateTripleList();
 
 }

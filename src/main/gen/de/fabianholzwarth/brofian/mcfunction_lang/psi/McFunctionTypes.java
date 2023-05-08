@@ -31,8 +31,20 @@ public interface McFunctionTypes {
   IElementType CMD_GAME_MODE = new McFunctionElementType("CMD_GAME_MODE");
   IElementType CMD_GAME_RULE = new McFunctionElementType("CMD_GAME_RULE");
   IElementType CMD_GIVE = new McFunctionElementType("CMD_GIVE");
+  IElementType CMD_HELP = new McFunctionElementType("CMD_HELP");
+  IElementType CMD_ITEM = new McFunctionElementType("CMD_ITEM");
+  IElementType CMD_ITEM_TARGET = new McFunctionElementType("CMD_ITEM_TARGET");
+  IElementType CMD_JFR = new McFunctionElementType("CMD_JFR");
+  IElementType CMD_KICK = new McFunctionElementType("CMD_KICK");
+  IElementType CMD_KILL = new McFunctionElementType("CMD_KILL");
+  IElementType CMD_LIST = new McFunctionElementType("CMD_LIST");
+  IElementType CMD_LOCATE = new McFunctionElementType("CMD_LOCATE");
+  IElementType CMD_LOOT = new McFunctionElementType("CMD_LOOT");
+  IElementType CMD_LOOT_SOURCE = new McFunctionElementType("CMD_LOOT_SOURCE");
+  IElementType CMD_LOOT_TARGET = new McFunctionElementType("CMD_LOOT_TARGET");
+  IElementType CMD_ME = new McFunctionElementType("CMD_ME");
   IElementType CMD_SET_BLOCK = new McFunctionElementType("CMD_SET_BLOCK");
-  IElementType COORDINATE_TRIPE = new McFunctionElementType("COORDINATE_TRIPE");
+  IElementType COORDINATE_TRIPLE = new McFunctionElementType("COORDINATE_TRIPLE");
   IElementType EXTENDED_IDENTIFIER = new McFunctionElementType("EXTENDED_IDENTIFIER");
   IElementType LINE_ = new McFunctionElementType("LINE_");
   IElementType PLACEHOLDER = new McFunctionElementType("PLACEHOLDER");
@@ -126,11 +138,47 @@ public interface McFunctionTypes {
       else if (type == CMD_GIVE) {
         return new McFunctionCmdGiveImpl(node);
       }
+      else if (type == CMD_HELP) {
+        return new McFunctionCmdHelpImpl(node);
+      }
+      else if (type == CMD_ITEM) {
+        return new McFunctionCmdItemImpl(node);
+      }
+      else if (type == CMD_ITEM_TARGET) {
+        return new McFunctionCmdItemTargetImpl(node);
+      }
+      else if (type == CMD_JFR) {
+        return new McFunctionCmdJfrImpl(node);
+      }
+      else if (type == CMD_KICK) {
+        return new McFunctionCmdKickImpl(node);
+      }
+      else if (type == CMD_KILL) {
+        return new McFunctionCmdKillImpl(node);
+      }
+      else if (type == CMD_LIST) {
+        return new McFunctionCmdListImpl(node);
+      }
+      else if (type == CMD_LOCATE) {
+        return new McFunctionCmdLocateImpl(node);
+      }
+      else if (type == CMD_LOOT) {
+        return new McFunctionCmdLootImpl(node);
+      }
+      else if (type == CMD_LOOT_SOURCE) {
+        return new McFunctionCmdLootSourceImpl(node);
+      }
+      else if (type == CMD_LOOT_TARGET) {
+        return new McFunctionCmdLootTargetImpl(node);
+      }
+      else if (type == CMD_ME) {
+        return new McFunctionCmdMeImpl(node);
+      }
       else if (type == CMD_SET_BLOCK) {
         return new McFunctionCmdSetBlockImpl(node);
       }
-      else if (type == COORDINATE_TRIPE) {
-        return new McFunctionCoordinateTripeImpl(node);
+      else if (type == COORDINATE_TRIPLE) {
+        return new McFunctionCoordinateTripleImpl(node);
       }
       else if (type == EXTENDED_IDENTIFIER) {
         return new McFunctionExtendedIdentifierImpl(node);

@@ -29,8 +29,8 @@ public class McFunctionCmdSetBlockImpl extends ASTWrapperPsiElement implements M
 
   @Override
   @NotNull
-  public McFunctionCoordinateTripe getCoordinateTripe() {
-    return findNotNullChildByClass(McFunctionCoordinateTripe.class);
+  public McFunctionCoordinateTriple getCoordinateTriple() {
+    return findNotNullChildByClass(McFunctionCoordinateTriple.class);
   }
 
 }

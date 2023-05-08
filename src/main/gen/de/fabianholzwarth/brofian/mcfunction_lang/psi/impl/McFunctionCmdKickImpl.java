@@ -11,14 +11,14 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionItemIdentifierImpl extends ASTWrapperPsiElement implements McFunctionItemIdentifier {
+public class McFunctionCmdKickImpl extends ASTWrapperPsiElement implements McFunctionCmdKick {
 
-  public McFunctionItemIdentifierImpl(@NotNull ASTNode node) {
+  public McFunctionCmdKickImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitItemIdentifier(this);
+    visitor.visitCmdKick(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class McFunctionItemIdentifierImpl extends ASTWrapperPsiElement implement
 
   @Override
   @NotNull
-  public McFunctionOptionalJSON getOptionalJSON() {
-    return findNotNullChildByClass(McFunctionOptionalJSON.class);
+  public McFunctionTargetSelector getTargetSelector() {
+    return findNotNullChildByClass(McFunctionTargetSelector.class);
   }
 
 }

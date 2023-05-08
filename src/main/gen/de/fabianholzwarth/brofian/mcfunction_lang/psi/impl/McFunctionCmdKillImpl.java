@@ -11,14 +11,14 @@ import static de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import de.fabianholzwarth.brofian.mcfunction_lang.psi.*;
 
-public class McFunctionCmdDataTargetImpl extends ASTWrapperPsiElement implements McFunctionCmdDataTarget {
+public class McFunctionCmdKillImpl extends ASTWrapperPsiElement implements McFunctionCmdKill {
 
-  public McFunctionCmdDataTargetImpl(@NotNull ASTNode node) {
+  public McFunctionCmdKillImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull McFunctionVisitor visitor) {
-    visitor.visitCmdDataTarget(this);
+    visitor.visitCmdKill(this);
   }
 
   @Override
@@ -28,15 +28,9 @@ public class McFunctionCmdDataTargetImpl extends ASTWrapperPsiElement implements
   }
 
   @Override
-  @Nullable
-  public McFunctionCoordinateTriple getCoordinateTriple() {
-    return findChildByClass(McFunctionCoordinateTriple.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public McFunctionTargetSelector getTargetSelector() {
-    return findChildByClass(McFunctionTargetSelector.class);
+    return findNotNullChildByClass(McFunctionTargetSelector.class);
   }
 
 }

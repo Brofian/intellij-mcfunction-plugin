@@ -5,9 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface McFunctionCmdClone extends PsiElement {
+public interface McFunctionCmdLootTarget extends PsiElement {
 
-  @NotNull
-  List<McFunctionCoordinateTriple> getCoordinateTripleList();
+  @Nullable
+  McFunctionCoordinateTriple getCoordinateTriple();
+
+  @Nullable
+  McFunctionTargetSelector getTargetSelector();
 
 }

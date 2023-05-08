@@ -32,7 +32,7 @@ COLOR=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_g
 
 COMMANDS = advancement | attribute | ban | bossbar | clear | clone | damage | data | datapack | debug | defaultgamemode |
            difficulty | effect | enchant | experience | fill | fillbiome | forceload | function | gamemode | gamerule |
-           give | xp | setblock
+           give | help | item | jfr | kick | kill | list | locate | loot | me | xp | setblock
 
 CONSTANTS=true|false
 COMMAND_ADVANCEMENT_ARGS = grant|revoke|everything|from|until|through|only
@@ -51,6 +51,11 @@ COMMAND_FILL_ARGS = destroy|hollow|keep|outline|replace
 COMMAND_FILLBIOME_ARGS = replace
 COMMAND_FORCELOAD_ARGS = add|remove|all|query
 COMMAND_GAMEMODE_ARGS = survival|creative|adventure|spectator
+COMMAND_ITEM_ARGS = modify|replace|entity|block|with|from
+COMMAND_JFR_ARGS = start|stop
+COMMAND_LIST_ARGS = uuids
+COMMAND_LOCATE_ARGS = structure|biome|poi
+COMMAND_LOOT_ARGS = give|insert|spawn|replace|block|entity|fish|loot|kill|mine|mainhand|offhand
 COMMAND_ARGUMENT =  {COMMAND_ADVANCEMENT_ARGS} |
                     {COMMAND_ATTRIBUTE_ARGS} |
                     {COMMAND_BOSSBAR_ARGS} |
@@ -67,6 +72,11 @@ COMMAND_ARGUMENT =  {COMMAND_ADVANCEMENT_ARGS} |
                     {COMMAND_FILLBIOME_ARGS} |
                     {COMMAND_FORCELOAD_ARGS} |
                     {COMMAND_GAMEMODE_ARGS} |
+                    {COMMAND_ITEM_ARGS} |
+                    {COMMAND_JFR_ARGS} |
+                    {COMMAND_LIST_ARGS} |
+                    {COMMAND_LOCATE_ARGS} |
+                    {COMMAND_LOOT_ARGS} |
                     {CONSTANTS}
 
 %%

@@ -5,10 +5,13 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface McFunctionCmdDataTarget extends PsiElement {
+public interface McFunctionCmdLootSource extends PsiElement {
 
   @Nullable
   McFunctionCoordinateTriple getCoordinateTriple();
+
+  @Nullable
+  McFunctionExtendedIdentifier getExtendedIdentifier();
 
   @Nullable
   McFunctionTargetSelector getTargetSelector();

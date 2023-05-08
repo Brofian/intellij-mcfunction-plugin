@@ -99,11 +99,59 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCmdHelp(@NotNull McFunctionCmdHelp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdItem(@NotNull McFunctionCmdItem o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdItemTarget(@NotNull McFunctionCmdItemTarget o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdJfr(@NotNull McFunctionCmdJfr o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdKick(@NotNull McFunctionCmdKick o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdKill(@NotNull McFunctionCmdKill o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdList(@NotNull McFunctionCmdList o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdLocate(@NotNull McFunctionCmdLocate o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdLoot(@NotNull McFunctionCmdLoot o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdLootSource(@NotNull McFunctionCmdLootSource o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdLootTarget(@NotNull McFunctionCmdLootTarget o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdMe(@NotNull McFunctionCmdMe o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdSetBlock(@NotNull McFunctionCmdSetBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitCoordinateTripe(@NotNull McFunctionCoordinateTripe o) {
+  public void visitCoordinateTriple(@NotNull McFunctionCoordinateTriple o) {
     visitPsiElement(o);
   }
 
