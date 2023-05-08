@@ -214,6 +214,42 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
 
   @Override
   @Nullable
+  public McFunctionCmdMsg getCmdMsg() {
+    return findChildByClass(McFunctionCmdMsg.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdOp getCmdOp() {
+    return findChildByClass(McFunctionCmdOp.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdPardon getCmdPardon() {
+    return findChildByClass(McFunctionCmdPardon.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdPardonIp getCmdPardonIp() {
+    return findChildByClass(McFunctionCmdPardonIp.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdParticle getCmdParticle() {
+    return findChildByClass(McFunctionCmdParticle.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdPlace getCmdPlace() {
+    return findChildByClass(McFunctionCmdPlace.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionCmdSetBlock getCmdSetBlock() {
     return findChildByClass(McFunctionCmdSetBlock.class);
   }

@@ -147,6 +147,30 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCmdMsg(@NotNull McFunctionCmdMsg o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdOp(@NotNull McFunctionCmdOp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdPardon(@NotNull McFunctionCmdPardon o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdPardonIp(@NotNull McFunctionCmdPardonIp o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdParticle(@NotNull McFunctionCmdParticle o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdPlace(@NotNull McFunctionCmdPlace o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdSetBlock(@NotNull McFunctionCmdSetBlock o) {
     visitPsiElement(o);
   }

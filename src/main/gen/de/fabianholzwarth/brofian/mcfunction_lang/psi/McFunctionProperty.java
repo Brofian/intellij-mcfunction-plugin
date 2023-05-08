@@ -101,6 +101,24 @@ public interface McFunctionProperty extends McFunctionNamedElement {
   McFunctionCmdMe getCmdMe();
 
   @Nullable
+  McFunctionCmdMsg getCmdMsg();
+
+  @Nullable
+  McFunctionCmdOp getCmdOp();
+
+  @Nullable
+  McFunctionCmdPardon getCmdPardon();
+
+  @Nullable
+  McFunctionCmdPardonIp getCmdPardonIp();
+
+  @Nullable
+  McFunctionCmdParticle getCmdParticle();
+
+  @Nullable
+  McFunctionCmdPlace getCmdPlace();
+
+  @Nullable
   McFunctionCmdSetBlock getCmdSetBlock();
 
   String getKey();

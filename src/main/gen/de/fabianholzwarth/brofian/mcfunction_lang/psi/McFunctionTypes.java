@@ -43,6 +43,12 @@ public interface McFunctionTypes {
   IElementType CMD_LOOT_SOURCE = new McFunctionElementType("CMD_LOOT_SOURCE");
   IElementType CMD_LOOT_TARGET = new McFunctionElementType("CMD_LOOT_TARGET");
   IElementType CMD_ME = new McFunctionElementType("CMD_ME");
+  IElementType CMD_MSG = new McFunctionElementType("CMD_MSG");
+  IElementType CMD_OP = new McFunctionElementType("CMD_OP");
+  IElementType CMD_PARDON = new McFunctionElementType("CMD_PARDON");
+  IElementType CMD_PARDON_IP = new McFunctionElementType("CMD_PARDON_IP");
+  IElementType CMD_PARTICLE = new McFunctionElementType("CMD_PARTICLE");
+  IElementType CMD_PLACE = new McFunctionElementType("CMD_PLACE");
   IElementType CMD_SET_BLOCK = new McFunctionElementType("CMD_SET_BLOCK");
   IElementType COORDINATE_TRIPLE = new McFunctionElementType("COORDINATE_TRIPLE");
   IElementType EXTENDED_IDENTIFIER = new McFunctionElementType("EXTENDED_IDENTIFIER");
@@ -173,6 +179,24 @@ public interface McFunctionTypes {
       }
       else if (type == CMD_ME) {
         return new McFunctionCmdMeImpl(node);
+      }
+      else if (type == CMD_MSG) {
+        return new McFunctionCmdMsgImpl(node);
+      }
+      else if (type == CMD_OP) {
+        return new McFunctionCmdOpImpl(node);
+      }
+      else if (type == CMD_PARDON) {
+        return new McFunctionCmdPardonImpl(node);
+      }
+      else if (type == CMD_PARDON_IP) {
+        return new McFunctionCmdPardonIpImpl(node);
+      }
+      else if (type == CMD_PARTICLE) {
+        return new McFunctionCmdParticleImpl(node);
+      }
+      else if (type == CMD_PLACE) {
+        return new McFunctionCmdPlaceImpl(node);
       }
       else if (type == CMD_SET_BLOCK) {
         return new McFunctionCmdSetBlockImpl(node);

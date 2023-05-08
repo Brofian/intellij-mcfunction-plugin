@@ -32,7 +32,8 @@ COLOR=black|dark_blue|dark_green|dark_aqua|dark_red|dark_purple|gold|gray|dark_g
 
 COMMANDS = advancement | attribute | ban | bossbar | clear | clone | damage | data | datapack | debug | defaultgamemode |
            difficulty | effect | enchant | experience | fill | fillbiome | forceload | function | gamemode | gamerule |
-           give | help | item | jfr | kick | kill | list | locate | loot | me | xp | setblock
+           give | help | item | jfr | kick | kill | list | locate | loot | me | msg | op | pardon | pardon-ip | particle |
+           place | xp | setblock
 
 CONSTANTS=true|false
 COMMAND_ADVANCEMENT_ARGS = grant|revoke|everything|from|until|through|only
@@ -56,6 +57,9 @@ COMMAND_JFR_ARGS = start|stop
 COMMAND_LIST_ARGS = uuids
 COMMAND_LOCATE_ARGS = structure|biome|poi
 COMMAND_LOOT_ARGS = give|insert|spawn|replace|block|entity|fish|loot|kill|mine|mainhand|offhand
+COMMAND_PARTICLE_ARGS = force|normal
+COMMAND_PLACE_ARGS = feature|jigsaw|structure|template|none|clockwise_90|counterclockwise_90|180|front_back|left_right
+
 COMMAND_ARGUMENT =  {COMMAND_ADVANCEMENT_ARGS} |
                     {COMMAND_ATTRIBUTE_ARGS} |
                     {COMMAND_BOSSBAR_ARGS} |
@@ -77,6 +81,8 @@ COMMAND_ARGUMENT =  {COMMAND_ADVANCEMENT_ARGS} |
                     {COMMAND_LIST_ARGS} |
                     {COMMAND_LOCATE_ARGS} |
                     {COMMAND_LOOT_ARGS} |
+                    {COMMAND_PARTICLE_ARGS} |
+                    {COMMAND_PLACE_ARGS} |
                     {CONSTANTS}
 
 %%

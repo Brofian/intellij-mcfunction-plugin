@@ -32,7 +32,8 @@ line_ ::= (property|COMMENT|CRLF)
 // the available properties are the possible commands
 property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdClone | cmdDamage | cmdData | cmdDataPack | cmdDebug | cmdDefaultGameMode |
               cmdDifficulty | cmdEffect | cmdEnchant | cmdExperience | cmdFill | cmdFillBiome | cmdForceLoad | cmdFunction | cmdGameRule | cmdGameMode | cmdGive |
-              cmdHelp | cmdItem | cmdJfr | cmdKick | cmdKill | cmdList | cmdLocate | cmdLoot | cmdMe | cmdSetBlock ) {
+              cmdHelp | cmdItem | cmdJfr | cmdKick | cmdKill | cmdList | cmdLocate | cmdLoot | cmdMe | cmdMsg | cmdOp | cmdPardon | cmdPardonIp | cmdParticle |
+              cmdPlace | cmdSetBlock ) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
@@ -133,6 +134,15 @@ cmdLoot ::= ('loot' cmdLoot_Target cmdLoot_Source)
                             ('kill' targetSelector) |
                             ('mine' coordinateTriple [extendedIdentifier|'mainhand'|'offhand']))
 cmdMe ::= ('me' IDENTIFIER*)
+cmdMsg ::= ('msg' targetSelector IDENTIFIER*)
+cmdOp ::= ('op' targetSelector)
+cmdPardon ::= ('pardon' targetSelector)
+cmdPardonIp ::= ('pardon-ip' IDENTIFIER)
+cmdParticle ::= ('particle' IDENTIFIER [coordinateTriple [coordinateTriple NUMBER NUMBER [('force'|'normal') [targetSelector]]]])
+cmdPlace ::= ('place' (('feature' IDENTIFIER [coordinateTriple]) |
+                       ('jigsaw' IDENTIFIER IDENTIFIER NUMBER [coordinateTriple]) |
+                       ('structure' IDENTIFIER [coordinateTriple]) |
+                       ('template' IDENTIFIER [coordinateTriple [('none'|'clockwise_90'|'counterclockwise_90'|'180') [('none'|'front_back'|'left_right') [NUMBER [NUMBER]]]]])))
 
 cmdSetBlock ::= ('setblock' coordinateTriple IDENTIFIER)
 
