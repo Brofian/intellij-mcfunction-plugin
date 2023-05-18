@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdGameRule extends PsiElement {
 
+  @Nullable
+  McFunctionBoolValue getBoolValue();
+
 }

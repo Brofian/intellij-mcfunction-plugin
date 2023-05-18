@@ -28,15 +28,15 @@ public class McFunctionCmdLootImpl extends ASTWrapperPsiElement implements McFun
   }
 
   @Override
-  @NotNull
+  @Nullable
   public McFunctionCmdLootSource getCmdLootSource() {
-    return findNotNullChildByClass(McFunctionCmdLootSource.class);
+    return findChildByClass(McFunctionCmdLootSource.class);
   }
 
   @Override
-  @NotNull
+  @Nullable
   public McFunctionCmdLootTarget getCmdLootTarget() {
-    return findNotNullChildByClass(McFunctionCmdLootTarget.class);
+    return findChildByClass(McFunctionCmdLootTarget.class);
   }
 
 }

@@ -28,9 +28,15 @@ public class McFunctionCmdMsgImpl extends ASTWrapperPsiElement implements McFunc
   }
 
   @Override
-  @NotNull
+  @Nullable
+  public McFunctionFreeMessageValues getFreeMessageValues() {
+    return findChildByClass(McFunctionFreeMessageValues.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
-    return findNotNullChildByClass(McFunctionTargetSelector.class);
+    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

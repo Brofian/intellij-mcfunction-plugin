@@ -10,7 +10,7 @@ public interface McFunctionCmdDamage extends PsiElement {
   @Nullable
   McFunctionCoordinateTriple getCoordinateTriple();
 
-  @NotNull
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

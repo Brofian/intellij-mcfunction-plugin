@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdKill extends PsiElement {
 
-  @NotNull
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

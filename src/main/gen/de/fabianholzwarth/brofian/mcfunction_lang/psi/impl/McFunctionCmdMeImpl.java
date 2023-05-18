@@ -27,4 +27,10 @@ public class McFunctionCmdMeImpl extends ASTWrapperPsiElement implements McFunct
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public McFunctionFreeMessageValues getFreeMessageValues() {
+    return findChildByClass(McFunctionFreeMessageValues.class);
+  }
+
 }

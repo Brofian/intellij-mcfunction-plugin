@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface McFunctionCmdEffect extends PsiElement {
 
   @Nullable
+  McFunctionBoolValue getBoolValue();
+
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

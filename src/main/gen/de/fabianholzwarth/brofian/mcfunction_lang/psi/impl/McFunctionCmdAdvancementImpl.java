@@ -28,9 +28,9 @@ public class McFunctionCmdAdvancementImpl extends ASTWrapperPsiElement implement
   }
 
   @Override
-  @NotNull
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
-    return findNotNullChildByClass(McFunctionTargetSelector.class);
+    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

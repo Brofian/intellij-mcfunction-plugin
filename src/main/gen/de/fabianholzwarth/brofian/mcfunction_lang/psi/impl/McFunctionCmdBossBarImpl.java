@@ -29,6 +29,12 @@ public class McFunctionCmdBossBarImpl extends ASTWrapperPsiElement implements Mc
 
   @Override
   @Nullable
+  public McFunctionBoolValue getBoolValue() {
+    return findChildByClass(McFunctionBoolValue.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
     return findChildByClass(McFunctionTargetSelector.class);
   }

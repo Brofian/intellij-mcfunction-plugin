@@ -27,4 +27,10 @@ public class McFunctionCmdGameRuleImpl extends ASTWrapperPsiElement implements M
     else super.accept(visitor);
   }
 
+  @Override
+  @Nullable
+  public McFunctionBoolValue getBoolValue() {
+    return findChildByClass(McFunctionBoolValue.class);
+  }
+
 }

@@ -29,6 +29,12 @@ public class McFunctionCmdEffectImpl extends ASTWrapperPsiElement implements McF
 
   @Override
   @Nullable
+  public McFunctionBoolValue getBoolValue() {
+    return findChildByClass(McFunctionBoolValue.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
     return findChildByClass(McFunctionTargetSelector.class);
   }

@@ -50,6 +50,9 @@ public interface McFunctionProperty extends McFunctionNamedElement {
   McFunctionCmdEnchant getCmdEnchant();
 
   @Nullable
+  McFunctionCmdExecute getCmdExecute();
+
+  @Nullable
   McFunctionCmdExperience getCmdExperience();
 
   @Nullable
@@ -119,7 +122,97 @@ public interface McFunctionProperty extends McFunctionNamedElement {
   McFunctionCmdPlace getCmdPlace();
 
   @Nullable
+  McFunctionCmdPlaySound getCmdPlaySound();
+
+  @Nullable
+  McFunctionCmdPublish getCmdPublish();
+
+  @Nullable
+  McFunctionCmdRecipe getCmdRecipe();
+
+  @Nullable
+  McFunctionCmdReload getCmdReload();
+
+  @Nullable
+  McFunctionCmdSaveAll getCmdSaveAll();
+
+  @Nullable
+  McFunctionCmdSaveOff getCmdSaveOff();
+
+  @Nullable
+  McFunctionCmdSaveOn getCmdSaveOn();
+
+  @Nullable
+  McFunctionCmdSay getCmdSay();
+
+  @Nullable
+  McFunctionCmdSchedule getCmdSchedule();
+
+  @Nullable
+  McFunctionCmdScoreboard getCmdScoreboard();
+
+  @Nullable
+  McFunctionCmdSeed getCmdSeed();
+
+  @Nullable
   McFunctionCmdSetBlock getCmdSetBlock();
+
+  @Nullable
+  McFunctionCmdSetIdleTimeout getCmdSetIdleTimeout();
+
+  @Nullable
+  McFunctionCmdSetWorldSpawn getCmdSetWorldSpawn();
+
+  @Nullable
+  McFunctionCmdSpawnPoint getCmdSpawnPoint();
+
+  @Nullable
+  McFunctionCmdSpectate getCmdSpectate();
+
+  @Nullable
+  McFunctionCmdSpreadPlayers getCmdSpreadPlayers();
+
+  @Nullable
+  McFunctionCmdStop getCmdStop();
+
+  @Nullable
+  McFunctionCmdStopSound getCmdStopSound();
+
+  @Nullable
+  McFunctionCmdSummon getCmdSummon();
+
+  @Nullable
+  McFunctionCmdTag getCmdTag();
+
+  @Nullable
+  McFunctionCmdTeam getCmdTeam();
+
+  @Nullable
+  McFunctionCmdTeamMsg getCmdTeamMsg();
+
+  @Nullable
+  McFunctionCmdTeleport getCmdTeleport();
+
+  @Nullable
+  McFunctionCmdTellRaw getCmdTellRaw();
+
+  @Nullable
+  McFunctionCmdTime getCmdTime();
+
+  @Nullable
+  McFunctionCmdTitle getCmdTitle();
+
+  @Nullable
+  McFunctionCmdTrigger getCmdTrigger();
+
+  @Nullable
+  McFunctionCmdWeather getCmdWeather();
+
+  @Nullable
+  McFunctionCmdWhitelist getCmdWhitelist();
+
+  @Nullable
+  McFunctionCmdWorldBorder getCmdWorldBorder();
 
   String getKey();
 

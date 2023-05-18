@@ -28,9 +28,9 @@ public class McFunctionCmdEnchantImpl extends ASTWrapperPsiElement implements Mc
   }
 
   @Override
-  @NotNull
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
-    return findNotNullChildByClass(McFunctionTargetSelector.class);
+    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

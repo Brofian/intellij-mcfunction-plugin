@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface McFunctionCmdBossBar extends PsiElement {
 
   @Nullable
+  McFunctionBoolValue getBoolValue();
+
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

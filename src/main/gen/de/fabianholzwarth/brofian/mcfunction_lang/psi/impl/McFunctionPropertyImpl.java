@@ -112,6 +112,12 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
 
   @Override
   @Nullable
+  public McFunctionCmdExecute getCmdExecute() {
+    return findChildByClass(McFunctionCmdExecute.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionCmdExperience getCmdExperience() {
     return findChildByClass(McFunctionCmdExperience.class);
   }
@@ -250,8 +256,188 @@ public class McFunctionPropertyImpl extends McFunctionNamedElementImpl implement
 
   @Override
   @Nullable
+  public McFunctionCmdPlaySound getCmdPlaySound() {
+    return findChildByClass(McFunctionCmdPlaySound.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdPublish getCmdPublish() {
+    return findChildByClass(McFunctionCmdPublish.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdRecipe getCmdRecipe() {
+    return findChildByClass(McFunctionCmdRecipe.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdReload getCmdReload() {
+    return findChildByClass(McFunctionCmdReload.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSaveAll getCmdSaveAll() {
+    return findChildByClass(McFunctionCmdSaveAll.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSaveOff getCmdSaveOff() {
+    return findChildByClass(McFunctionCmdSaveOff.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSaveOn getCmdSaveOn() {
+    return findChildByClass(McFunctionCmdSaveOn.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSay getCmdSay() {
+    return findChildByClass(McFunctionCmdSay.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSchedule getCmdSchedule() {
+    return findChildByClass(McFunctionCmdSchedule.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdScoreboard getCmdScoreboard() {
+    return findChildByClass(McFunctionCmdScoreboard.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSeed getCmdSeed() {
+    return findChildByClass(McFunctionCmdSeed.class);
+  }
+
+  @Override
+  @Nullable
   public McFunctionCmdSetBlock getCmdSetBlock() {
     return findChildByClass(McFunctionCmdSetBlock.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSetIdleTimeout getCmdSetIdleTimeout() {
+    return findChildByClass(McFunctionCmdSetIdleTimeout.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSetWorldSpawn getCmdSetWorldSpawn() {
+    return findChildByClass(McFunctionCmdSetWorldSpawn.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSpawnPoint getCmdSpawnPoint() {
+    return findChildByClass(McFunctionCmdSpawnPoint.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSpectate getCmdSpectate() {
+    return findChildByClass(McFunctionCmdSpectate.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSpreadPlayers getCmdSpreadPlayers() {
+    return findChildByClass(McFunctionCmdSpreadPlayers.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdStop getCmdStop() {
+    return findChildByClass(McFunctionCmdStop.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdStopSound getCmdStopSound() {
+    return findChildByClass(McFunctionCmdStopSound.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdSummon getCmdSummon() {
+    return findChildByClass(McFunctionCmdSummon.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTag getCmdTag() {
+    return findChildByClass(McFunctionCmdTag.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTeam getCmdTeam() {
+    return findChildByClass(McFunctionCmdTeam.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTeamMsg getCmdTeamMsg() {
+    return findChildByClass(McFunctionCmdTeamMsg.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTeleport getCmdTeleport() {
+    return findChildByClass(McFunctionCmdTeleport.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTellRaw getCmdTellRaw() {
+    return findChildByClass(McFunctionCmdTellRaw.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTime getCmdTime() {
+    return findChildByClass(McFunctionCmdTime.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTitle getCmdTitle() {
+    return findChildByClass(McFunctionCmdTitle.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdTrigger getCmdTrigger() {
+    return findChildByClass(McFunctionCmdTrigger.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdWeather getCmdWeather() {
+    return findChildByClass(McFunctionCmdWeather.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdWhitelist getCmdWhitelist() {
+    return findChildByClass(McFunctionCmdWhitelist.class);
+  }
+
+  @Override
+  @Nullable
+  public McFunctionCmdWorldBorder getCmdWorldBorder() {
+    return findChildByClass(McFunctionCmdWorldBorder.class);
   }
 
   @Override

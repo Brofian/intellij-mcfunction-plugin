@@ -21,46 +21,84 @@
 }
 
 // each file consists from an set of lines
-mcFunctionFile ::= line_* // {recoverWhile=statement_recover}
+mcFunctionFile ::= line_*
 
-// todo: recovery rule does not apply. The parsing is still stopped at the first error
-// private statement_recover ::= !(CRLF|'\n'|COMMAND)
+private statement_recover ::= !(CRLF|COMMENT|COMMAND)
 
 // each line can either be a comment, an empty line break, or a property with a line break
-line_ ::= (property|COMMENT|CRLF)
+line_ ::= (property|COMMENT|CRLF) {recoverWhile=statement_recover}
 
 // the available properties are the possible commands
 property ::= (cmdAdvancement | cmdAttribute | cmdBan | cmdBossBar | cmdClear | cmdClone | cmdDamage | cmdData | cmdDataPack | cmdDebug | cmdDefaultGameMode |
-              cmdDifficulty | cmdEffect | cmdEnchant | cmdExperience | cmdFill | cmdFillBiome | cmdForceLoad | cmdFunction | cmdGameRule | cmdGameMode | cmdGive |
-              cmdHelp | cmdItem | cmdJfr | cmdKick | cmdKill | cmdList | cmdLocate | cmdLoot | cmdMe | cmdMsg | cmdOp | cmdPardon | cmdPardonIp | cmdParticle |
-              cmdPlace | cmdSetBlock ) {
+              cmdDifficulty | cmdEffect | cmdEnchant | cmdExecute | cmdExperience | cmdFill | cmdFillBiome | cmdForceLoad | cmdFunction | cmdGameRule | cmdGameMode |
+              cmdGive | cmdHelp | cmdItem | cmdJfr | cmdKick | cmdKill | cmdList | cmdLocate | cmdLoot | cmdMe | cmdMsg | cmdOp | cmdPardon | cmdPardonIp | cmdParticle |
+              cmdPlace | cmdPlaySound | cmdPublish | cmdRecipe | cmdReload | cmdSaveAll | cmdSaveOff | cmdSaveOn | cmdSay | cmdSchedule | cmdScoreboard | cmdSeed |
+              cmdSetBlock | cmdSetIdleTimeout | cmdSetWorldSpawn | cmdSpawnPoint | cmdSpectate | cmdSpreadPlayers | cmdStop | cmdStopSound | cmdSummon | cmdTag |
+              cmdTeam | cmdTeamMsg | cmdTeleport | cmdTellRaw | cmdTime | cmdTitle | cmdTrigger | cmdWeather | cmdWhitelist | cmdWorldBorder) {
   mixin="de.fabianholzwarth.brofian.mcfunction_lang.psi.impl.McFunctionNamedElementImpl"
   implements="de.fabianholzwarth.brofian.mcfunction_lang.psi.McFunctionNamedElement"
   methods=[getKey getValue getName setName getNameIdentifier]
 }
 
-// command argument and command are two types used in the lexer, but are unused. Instead, the command names are used separately here
+// command argument and command are two types used in the lexer, but are unused here. Instead, the command names are used separately
 placeholder ::= COMMAND_ARGUMENT | COMMAND
-unused ::= OPERATOR
 
 // shortcuts for frequently used sequences
 coordinateTriple ::= ((COORDINATE|NUMBER) (COORDINATE|NUMBER) (COORDINATE|NUMBER))
+coordinateDouble ::= ((COORDINATE|NUMBER) (COORDINATE|NUMBER))
 targetSelector ::= (SELECTOR|IDENTIFIER)
-extendedIdentifier ::= (IDENTIFIER[JSON])
-// todo: prevent space between identifier and json
+extendedIdentifier ::= (IDENTIFIER[JSON]) // todo: prevent space between identifier and json
+boolValue ::= ('true'|'false')
+componentValue ::= (STRING|JSON)
+timeValue ::= (NUMBER|TIME)
+freeMessageValues ::= (STRING|SELECTOR|NUMBER|COORDINATE|JSON|IDENTIFIER)*
+dataType ::= ('byte'|'short'|'int'|'long'|'float'|'double')
+defaultDimensionIdentifiers ::= ('minecraft:overworld'|'minecraft:the_end'|'minecraft:the_nether')
+
+// the special definition for execute and its sub parts
+cmdExecute ::= ('execute' (cmdExecute_Modifier|cmdExecute_Condition)* ['run' property])
+        cmdExecute_Modifier ::= (('align' SWIZZLE) |
+                                 ('anchored' ('eyes'|'feet')) |
+                                 ('as' targetSelector) |
+                                 ('at' targetSelector) |
+                                 ('facing' (coordinateTriple | ('entity' targetSelector ('eyes'|'feet')))) |
+                                 ('in' (defaultDimensionIdentifiers|IDENTIFIER)) |
+                                 ('on' ('attacker'|'controller'|'leasher'|'origin'|'owner'|'passengers'|'target'|'vehicle')) |
+                                 ('positioned' (coordinateTriple | ('as' targetSelector) | ('over' ('world_surface'|'motion_blocking'|'motion_blocking_no_leaves'|'ocean_floor')))) |
+                                 ('rotated' ((NUMBER NUMBER) | ('as' targetSelector))) |
+                                 ('summon' IDENTIFIER))
+        cmdExecute_Condition ::=  (('if'|'unless' (('biome' coordinateTriple IDENTIFIER) |
+                                                   ('block' coordinateTriple IDENTIFIER) |
+                                                   ('blocks' coordinateTriple coordinateTriple coordinateTriple ('all'|'masked')) |
+                                                   ('data' (('block' coordinateTriple) |
+                                                            ('entity' targetSelector) |
+                                                            ('storage' IDENTIFIER)
+                                                           ) IDENTIFIER) |
+                                                   ('dimension' (defaultDimensionIdentifiers|IDENTIFIER)) |
+                                                   ('entity' targetSelector) |
+                                                   ('loaded' coordinateTriple) |
+                                                   ('predicate' IDENTIFIER) |
+                                                   ('score' targetSelector IDENTIFIER ((('<'|'<='|'='|'>='|'>') targetSelector IDENTIFIER) |
+                                                                                       ('matches' (NUMBER|INT_RANGE)))) |
+                                                   ('store' ('result'|'success') (('block' coordinateTriple IDENTIFIER dataType NUMBER) |
+                                                                                  ('bossbar' IDENTIFIER ('value'|'max')) |
+                                                                                  ('entity' targetSelector IDENTIFIER dataType NUMBER) |
+                                                                                  ('score' targetSelector IDENTIFIER) |
+                                                                                  ('storage' IDENTIFIER IDENTIFIER dataType NUMBER)))
+                                                    )))
 
 
 // the command definitions
 cmdAdvancement ::= ('advancement' ('revoke'|'grant') targetSelector ('everything' |
                                                                      (('from'|'through'|'until') IDENTIFIER) |
-                                                                     ('only' IDENTIFIER [ IDENTIFIER ]))) 
+                                                                     ('only' IDENTIFIER [ IDENTIFIER ]))) {pin=1}
 cmdAttribute ::= ('attribute' targetSelector IDENTIFIER (('get' NUMBER) |
                                                          ('base' ('get' [NUMBER] |'set' NUMBER)) |
                                                          ('modifier' (
                                                             ('add' IDENTIFIER IDENTIFIER NUMBER ('add'|'multiply'|'multiply_base')) |
                                                             ('remove' IDENTIFIER) |
-                                                            ('value' 'get' IDENTIFIER [NUMBER]))))) 
-cmdBan ::= ('ban' targetSelector [STRING]) 
+                                                            ('value' 'get' IDENTIFIER [NUMBER])))))  {pin=1}
+cmdBan ::= ('ban' targetSelector [STRING])  {pin=1}
 cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                            ('get' IDENTIFIER ('max'|'players'|'value'|'visible')) |
                            ('list') |
@@ -72,16 +110,16 @@ cmdBossBar ::= ('bossbar' (('add' IDENTIFIER STRING) |
                                 ('players' targetSelector) |
                                 ('style' ('notched_6'|'notched_10'|'notched_12'|'notched_20'|'progress')) |
                                 ('value' NUMBER) |
-                                ('visible' ('true'|'false'))
-                           )))) 
-cmdClear ::= ('clear' [SELECTOR [extendedIdentifier [NUMBER]]])
+                                ('visible' boolValue)
+                           ))))  {pin=1}
+cmdClear ::= ('clear' [SELECTOR [extendedIdentifier [NUMBER]]]) {pin=1}
 cmdClone ::= ('clone' ['from' IDENTIFIER] coordinateTriple coordinateTriple
                       ['to' IDENTIFIER]   coordinateTriple
                       [ (('replace'|'masked') ['force'|'move'|'normal']) |
                         ('filtered' IDENTIFIER ['force'|'move'|'normal'])
-                      ]) 
+                      ])  {pin=1}
 cmdDamage ::= ('damage' targetSelector NUMBER [IDENTIFIER [('at' coordinateTriple) |
-                                                           ('by' IDENTIFIER ['from' IDENTIFIER])]]) 
+                                                           ('by' IDENTIFIER ['from' IDENTIFIER])]])  {pin=1}
 cmdData ::= ('data' (('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
                      ('merge' cmdData_Target JSON) |
                      ('modify' cmdData_Target STRING ('append'|('insert' NUMBER)|'merge'|'prepend'|'set') (
@@ -89,41 +127,41 @@ cmdData ::= ('data' (('get' cmdData_Target [IDENTIFIER [NUMBER]]) |
                         ('string' cmdData_Target STRING NUMBER NUMBER) |
                         ('value' (NUMBER|STRING|JSON|IDENTIFIER)) |
                      )) |
-                     ('remove' cmdData_Target STRING)))
+                     ('remove' cmdData_Target STRING)))  {pin=1}
     cmdData_Target ::= ('block' coordinateTriple) |
                        ('entity' targetSelector) |
                        ('storage' STRING)
 cmdDataPack ::= ('datapack' (('disable' IDENTIFIER) |
                              ('enable' IDENTIFIER [('first'|'last') | (('before'|'after') IDENTIFIER)]) |
-                             ('list' ['available'|'enabled'])))
-cmdDebug ::= ('debug' ('start' | 'stop' | ('function' IDENTIFIER)))
-cmdDefaultGameMode ::= ('defaultgamemode' ('survival'|'creative'|'adventure'|'spectator'))
-cmdDifficulty ::= ('difficulty' ['peaceful'|'easy'|'normal'|'hard'])
+                             ('list' ['available'|'enabled'])))  {pin=1}
+cmdDebug ::= ('debug' ('start' | 'stop' | ('function' IDENTIFIER)))  {pin=1}
+cmdDefaultGameMode ::= ('defaultgamemode' ('survival'|'creative'|'adventure'|'spectator'))  {pin=1}
+cmdDifficulty ::= ('difficulty' ['peaceful'|'easy'|'normal'|'hard'])  {pin=1}
 cmdEffect ::= ('effect' (('clear' [targetSelector [IDENTIFIER]]) |
-                         ('give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER ['true'|'false']]])))
-cmdEnchant ::= ('enchant' targetSelector IDENTIFIER [NUMBER])
+                         ('give' targetSelector IDENTIFIER [(NUMBER|'infinite') [NUMBER [boolValue]]])))  {pin=1}
+cmdEnchant ::= ('enchant' targetSelector IDENTIFIER [NUMBER])  {pin=1}
 cmdExperience ::= (('enchant'|'xp') (('query' targetSelector ('levels'|'points')) |
-                                     (('add'|'set') targetSelector ['levels'|'points'])))
-cmdFill ::= ('fill' coordinateTriple coordinateTriple extendedIdentifier [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER) ])
-cmdFillBiome ::= ('fillbiome' coordinateTriple coordinateTriple IDENTIFIER ['replace' IDENTIFIER])
-cmdForceLoad ::= ('forceload' (('add' COORDINATE COORDINATE [COORDINATE COORDINATE]) |
-                               ('remove' ('all'| (COORDINATE COORDINATE [COORDINATE COORDINATE]))) |
-                               ('query' COORDINATE COORDINATE)))
-cmdFunction ::= ('function' IDENTIFIER)
-cmdGameMode ::= ('gamemode' ('survival'|'creative'|'adventure'|'spectator') [targetSelector])
-cmdGameRule ::= ('gamerule' IDENTIFIER [NUMBER|'true'|'false'])
-cmdGive ::= ('give' targetSelector extendedIdentifier [ NUMBER ] )
-cmdHelp ::= ('help')
+                                     (('add'|'set') targetSelector ['levels'|'points'])))  {pin=1}
+cmdFill ::= ('fill' coordinateTriple coordinateTriple extendedIdentifier [ 'destroy'|'hollow'|'keep'|'outline' | ('replace' IDENTIFIER) ]) {pin=1}
+cmdFillBiome ::= ('fillbiome' coordinateTriple coordinateTriple IDENTIFIER ['replace' IDENTIFIER]) {pin=1}
+cmdForceLoad ::= ('forceload' (('add' coordinateDouble coordinateDouble) |
+                               ('remove' ('all'| (coordinateDouble [coordinateDouble]))) |
+                               ('query' coordinateDouble)))  {pin=1}
+cmdFunction ::= ('function' IDENTIFIER)  {pin=1}
+cmdGameMode ::= ('gamemode' ('survival'|'creative'|'adventure'|'spectator') [targetSelector])  {pin=1}
+cmdGameRule ::= ('gamerule' IDENTIFIER [NUMBER|boolValue])  {pin=1}
+cmdGive ::= ('give' targetSelector extendedIdentifier [ NUMBER ] )  {pin=1}
+cmdHelp ::= ('help')  {pin=1}
 cmdItem ::= ('item' (('modify' cmdItem_Target IDENTIFIER IDENTIFIER) |
                      ('replace' cmdItem_Target IDENTIFIER (('with' extendedIdentifier NUMBER) |
-                                                           ('from' cmdItem_Target IDENTIFIER IDENTIFIER)))))
+                                                           ('from' cmdItem_Target IDENTIFIER IDENTIFIER)))))  {pin=1}
         cmdItem_Target ::= (('block' coordinateTriple) | ('entity' targetSelector))
-cmdJfr ::= ('jfr' ('start'|'stop'))
-cmdKick ::= ('kick' targetSelector [STRING])
-cmdKill ::= ('kill' targetSelector)
-cmdList ::= ('list' ['uuids'])
-cmdLocate ::= ('locate' ('structure'|'biome'|'poi') IDENTIFIER)
-cmdLoot ::= ('loot' cmdLoot_Target cmdLoot_Source)
+cmdJfr ::= ('jfr' ('start'|'stop'))  {pin=1}
+cmdKick ::= ('kick' targetSelector [freeMessageValues])  {pin=1}
+cmdKill ::= ('kill' targetSelector)  {pin=1}
+cmdList ::= ('list' ['uuids'])  {pin=1}
+cmdLocate ::= ('locate' ('structure'|'biome'|'poi') IDENTIFIER)  {pin=1}
+cmdLoot ::= ('loot' cmdLoot_Target cmdLoot_Source)  {pin=1}
         cmdLoot_Target ::= (('give' targetSelector) |
                             ('insert' coordinateTriple) |
                             ('spawn' coordinateTriple) |
@@ -133,17 +171,87 @@ cmdLoot ::= ('loot' cmdLoot_Target cmdLoot_Source)
                             ('loot' IDENTIFIER) |
                             ('kill' targetSelector) |
                             ('mine' coordinateTriple [extendedIdentifier|'mainhand'|'offhand']))
-cmdMe ::= ('me' IDENTIFIER*)
-cmdMsg ::= ('msg' targetSelector IDENTIFIER*)
-cmdOp ::= ('op' targetSelector)
-cmdPardon ::= ('pardon' targetSelector)
-cmdPardonIp ::= ('pardon-ip' IDENTIFIER)
-cmdParticle ::= ('particle' IDENTIFIER [coordinateTriple [coordinateTriple NUMBER NUMBER [('force'|'normal') [targetSelector]]]])
+cmdMe ::= ('me' freeMessageValues) {pin=1}
+cmdMsg ::= (('msg'|'w'|'tell') targetSelector freeMessageValues) {pin=1}
+cmdOp ::= ('op' targetSelector) {pin=1}
+cmdPardon ::= ('pardon' targetSelector) {pin=1}
+cmdPardonIp ::= ('pardon-ip' IDENTIFIER) {pin=1}
+cmdParticle ::= ('particle' IDENTIFIER [coordinateTriple [coordinateTriple NUMBER NUMBER [('force'|'normal') [targetSelector]]]]) {pin=1}
 cmdPlace ::= ('place' (('feature' IDENTIFIER [coordinateTriple]) |
                        ('jigsaw' IDENTIFIER IDENTIFIER NUMBER [coordinateTriple]) |
                        ('structure' IDENTIFIER [coordinateTriple]) |
-                       ('template' IDENTIFIER [coordinateTriple [('none'|'clockwise_90'|'counterclockwise_90'|'180') [('none'|'front_back'|'left_right') [NUMBER [NUMBER]]]]])))
-
-cmdSetBlock ::= ('setblock' coordinateTriple IDENTIFIER)
-
+                       ('template' IDENTIFIER [coordinateTriple [('none'|'clockwise_90'|'counterclockwise_90'|'180') [('none'|'front_back'|'left_right') [NUMBER [NUMBER]]]]])))  {pin=1}
+cmdPlaySound ::= ('playsound' IDENTIFIER cmdPlaySound_Source targetSelector [coordinateTriple [NUMBER [NUMBER [NUMBER]]]]) {pin=1}
+        cmdPlaySound_Source ::= ('master'|'music'|'record'|'weather'|'block'|'hostile'|'neutral'|'player'|'ambient'|'voice')
+cmdPublish ::= ('publish' [boolValue [('survival'|'creative'|'adventure'|'spectator') [NUMBER]]]) {pin=1}
+cmdRecipe ::= ('recipe' ('give'|'take' targetSelector ('*'|IDENTIFIER))) {pin=1}
+cmdReload ::= ('reload') {pin=1}
+cmdSaveAll ::= ('save-all' ['flush']) {pin=1}
+cmdSaveOff ::= ('save-off') {pin=1}
+cmdSaveOn ::= ('save-on') {pin=1}
+cmdSay ::= ('say' freeMessageValues) {pin=1}
+cmdSchedule ::= ('schedule' (('clear' IDENTIFIER) |
+                             ('function' IDENTIFIER timeValue ['append'|'replace']))) {pin=1}
+cmdScoreboard ::= ('scoreboard' (cmdScoreboard_Objectives|cmdScoreboard_Players)) {pin=1}
+        cmdScoreboard_Objectives ::= ('objectives' ('list' |
+                                                    ('add' IDENTIFIER ('dummy'|IDENTIFIER) [componentValue]) |
+                                                    ('remove' ('*'|IDENTIFIER)) |
+                                                    ('setdisplay' ((('list'|'sidebar') IDENTIFIER ['ascending'|'descending']) |
+                                                                   (('belowName'|IDENTIFIER) IDENTIFIER)))) |
+                                                    ('modify' IDENTIFIER (('displayname' componentValue) |
+                                                                          ('rendertype' ('hearts'|'integer')))))
+        cmdScoreboard_Players ::= ('players' (('list' [targetSelector]) |
+                                              ('get' targetSelector IDENTIFIER) |
+                                              ('set' targetSelector IDENTIFIER NUMBER) |
+                                              ('add' targetSelector IDENTIFIER NUMBER) |
+                                              ('remove' targetSelector IDENTIFIER NUMBER) |
+                                              ('reset' targetSelector [IDENTIFIER]) |
+                                              ('enable' targetSelector IDENTIFIER) |
+                                              ('operation' targetSelector IDENTIFIER OPERATOR targetSelector IDENTIFIER)))
+cmdSeed ::= ('seed') {pin=1}
+cmdSetBlock ::= ('setblock' coordinateTriple IDENTIFIER ['destroy'|'keep'|'replace']) {pin=1}
+cmdSetIdleTimeout ::= ('setidletimeout' NUMBER) {pin=1}
+cmdSetWorldSpawn ::= ('setworldspawn' [coordinateTriple [NUMBER]]) {pin=1}
+cmdSpawnPoint ::= ('spawnpoint' [targetSelector [coordinateTriple [NUMBER]]]) {pin=1}
+cmdSpectate ::= ('spectate' [targetSelector [targetSelector]]) {pin=1}
+cmdSpreadPlayers ::= ('spreadplayers' coordinateDouble NUMBER NUMBER [('under' NUMBER)] boolValue targetSelector) {pin=1}
+cmdStop ::= ('stop') {pin=1}
+cmdStopSound ::= ('stopsound' targetSelector [cmdPlaySound_Source [IDENTIFIER]]) {pin=1}
+cmdSummon ::= ('summon' IDENTIFIER [coordinateTriple [JSON]]) {pin=1}
+cmdTag ::= ('tag' targetSelector ('list' | (('add'|'remove') IDENTIFIER))) {pin=1}
+cmdTeam ::= ('team' (('add' IDENTIFIER componentValue) |
+                     (('list'|'remove'|'empty') IDENTIFIER) |
+                     ('join' IDENTIFIER [targetSelector]) |
+                     ('leave' targetSelector) |
+                     ('modify' IDENTIFIER cmdTeam_ModOptions))) {pin=1}
+        cmdTeam_ModOptions ::= (('displayName' componentValue) |
+                                ('color' COLOR) |
+                                ('friendlyFire' boolValue) |
+                                ('seeFriendlyInvisibles' boolValue) |
+                                ('nametagVisibility' ('never'|'hideForOtherTeams'|'hideForOwnTeam'|'always')) |
+                                ('deathMessageVisibility' ('never'|'hideForOtherTeams'|'hideForOwnTeam'|'always')) |
+                                ('collisionRule' ('always'|'never'|'pushOtherTeams'|'pushOwnTeam')) |
+                                ('prefix' componentValue) |
+                                ('suffix' componentValue))
+cmdTeamMsg ::= (('teammsg'|'tm') freeMessageValues) {pin=1}
+cmdTeleport ::= (('teleport'|'tp') (([targetSelector] (coordinateTriple|targetSelector)) |
+                             (targetSelector coordinateTriple (coordinateDouble |
+                                                               ('facing' (coordinateTriple | ('entity' targetSelector ['eyes'|'feet']))))))) {pin=1}
+cmdTellRaw ::= ('tellraw' targetSelector freeMessageValues) {pin=1}
+cmdTime ::= ('time' (('add' timeValue) |
+                     ('set' (timeValue|'day'|'night'|'noon'|'midnight')) |
+                     ('query' ('daytime'|'gametime'|'day')))) {pin=1}
+cmdTitle ::= ('title' targetSelector (('clear'|'reset') |
+                                      (('title'|'subtitle'|'actionbar') componentValue) |
+                                      ('times' timeValue timeValue timeValue))) {pin=1}
+cmdTrigger ::= ('trigger' IDENTIFIER [('set'|'add') NUMBER]) {pin=1}
+cmdWeather ::= ('weather' ('clear'|'rain'|'thunder') [timeValue]) {pin=1}
+cmdWhitelist ::= ('whitelist' (('list'|'off'|'on'|'reload') |
+                               (('add'|'remove') targetSelector))) {pin=1}
+cmdWorldBorder ::= ('worldborder' ('get' |
+                                   ('add' NUMBER [NUMBER]) |
+                                   ('center' coordinateDouble) |
+                                   ('damage' (('amount' NUMBER) | ('buffer' NUMBER))) |
+                                   ('set' NUMBER [NUMBER]) |
+                                   ('warning' (('distance' NUMBER) | ('time' NUMBER))))) {pin=1}
 

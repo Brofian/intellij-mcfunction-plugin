@@ -34,9 +34,9 @@ public class McFunctionCmdDamageImpl extends ASTWrapperPsiElement implements McF
   }
 
   @Override
-  @NotNull
+  @Nullable
   public McFunctionTargetSelector getTargetSelector() {
-    return findNotNullChildByClass(McFunctionTargetSelector.class);
+    return findChildByClass(McFunctionTargetSelector.class);
   }
 
 }

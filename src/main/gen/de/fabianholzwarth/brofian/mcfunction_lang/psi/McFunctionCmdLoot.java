@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdLoot extends PsiElement {
 
-  @NotNull
+  @Nullable
   McFunctionCmdLootSource getCmdLootSource();
 
-  @NotNull
+  @Nullable
   McFunctionCmdLootTarget getCmdLootTarget();
 
 }

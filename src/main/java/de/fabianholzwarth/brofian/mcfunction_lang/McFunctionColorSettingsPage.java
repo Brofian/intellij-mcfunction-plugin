@@ -19,10 +19,12 @@ public class McFunctionColorSettingsPage implements ColorSettingsPage {
             new AttributesDescriptor("Command argument", McFunctionSyntaxHighlighter.ARGUMENT),
             new AttributesDescriptor("Coordinate", McFunctionSyntaxHighlighter.COORDINATE),
             new AttributesDescriptor("Number", McFunctionSyntaxHighlighter.NUMBER),
+            new AttributesDescriptor("Duration", McFunctionSyntaxHighlighter.TIME),
             new AttributesDescriptor("Comment", McFunctionSyntaxHighlighter.COMMENT),
             new AttributesDescriptor("Operator", McFunctionSyntaxHighlighter.OPERATOR),
             new AttributesDescriptor("Selector", McFunctionSyntaxHighlighter.SELECTOR),
             new AttributesDescriptor("Identifier", McFunctionSyntaxHighlighter.IDENTIFIER),
+            new AttributesDescriptor("Swizzle", McFunctionSyntaxHighlighter.SWIZZLE),
             new AttributesDescriptor("Bad value", McFunctionSyntaxHighlighter.BAD_CHARACTER)
     };
 

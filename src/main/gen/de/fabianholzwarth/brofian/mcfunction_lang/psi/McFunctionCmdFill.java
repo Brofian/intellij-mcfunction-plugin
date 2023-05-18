@@ -10,7 +10,7 @@ public interface McFunctionCmdFill extends PsiElement {
   @NotNull
   List<McFunctionCoordinateTriple> getCoordinateTripleList();
 
-  @NotNull
+  @Nullable
   McFunctionExtendedIdentifier getExtendedIdentifier();
 
 }

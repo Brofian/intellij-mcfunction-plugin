@@ -27,4 +27,10 @@ public class McFunctionCmdForceLoadImpl extends ASTWrapperPsiElement implements 
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public List<McFunctionCoordinateDouble> getCoordinateDoubleList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, McFunctionCoordinateDouble.class);
+  }
+
 }

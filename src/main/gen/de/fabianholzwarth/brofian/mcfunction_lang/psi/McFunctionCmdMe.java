@@ -7,4 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdMe extends PsiElement {
 
+  @Nullable
+  McFunctionFreeMessageValues getFreeMessageValues();
+
 }

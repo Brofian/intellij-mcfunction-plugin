@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdEnchant extends PsiElement {
 
-  @NotNull
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

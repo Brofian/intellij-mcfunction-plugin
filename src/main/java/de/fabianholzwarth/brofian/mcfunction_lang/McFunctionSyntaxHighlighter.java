@@ -24,9 +24,14 @@ public class McFunctionSyntaxHighlighter extends SyntaxHighlighterBase {
     /*
      * custom attributes for mcfunction
      */
-
+    // 10s, 200t, 3d
+    public static final TextAttributesKey TIME = createTextAttributesKey("MCFUNCTION_TIME", DefaultLanguageHighlighterColors.NUMBER);
+    // ..5,10..20,25..
+    public static final TextAttributesKey INT_RANGE = createTextAttributesKey("MCFUNCTION_INT_RANGE", DefaultLanguageHighlighterColors.NUMBER);
     // 1, 2, 4, ..., 64
     public static final TextAttributesKey NUMBER = createTextAttributesKey("MCFUNCTION_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+    // x,y,z,xy,yx,xyz,zx,zyx
+    public static final TextAttributesKey SWIZZLE = createTextAttributesKey("MCFUNCTION_SWIZZLE", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     // setblock,give,attribute,...
     public static final TextAttributesKey COMMAND = createTextAttributesKey("MCFUNCTION_COMMAND", DefaultLanguageHighlighterColors.KEYWORD);
     // add,set,get,revoke,grant,modify,...
@@ -57,6 +62,9 @@ public class McFunctionSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] COLOR_KEYS = new TextAttributesKey[]{COLOR};
     private static final TextAttributesKey[] ARGUMENT_KEYS = new TextAttributesKey[]{ARGUMENT};
     private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
+    private static final TextAttributesKey[] INT_RANGE_KEYS = new TextAttributesKey[]{INT_RANGE};
+    private static final TextAttributesKey[] SWIZZLE_KEYS = new TextAttributesKey[]{SWIZZLE};
+    private static final TextAttributesKey[] TIME_KEYS = new TextAttributesKey[]{TIME};
     private static final TextAttributesKey[] SELECTOR_KEYS = new TextAttributesKey[]{SELECTOR};
     private static final TextAttributesKey[] STRING_KEYS = new TextAttributesKey[]{STRING};
     private static final TextAttributesKey[] JSON_KEYS = new TextAttributesKey[]{JSON};
@@ -80,6 +88,9 @@ public class McFunctionSyntaxHighlighter extends SyntaxHighlighterBase {
         if (tokenType.equals(McFunctionTypes.COLOR))                                return COLOR_KEYS;
         if (tokenType.equals(McFunctionTypes.COORDINATE))                           return COORDINATE_KEYS;
         if (tokenType.equals(McFunctionTypes.NUMBER))                               return NUMBER_KEYS;
+        if (tokenType.equals(McFunctionTypes.INT_RANGE))                            return INT_RANGE_KEYS;
+        if (tokenType.equals(McFunctionTypes.TIME))                                 return TIME_KEYS;
+        if (tokenType.equals(McFunctionTypes.SWIZZLE))                              return SWIZZLE_KEYS;
         if (tokenType.equals(McFunctionTypes.OPERATOR))                             return OPERATOR_KEYS;
         if (tokenType.equals(McFunctionTypes.STRING))                               return STRING_KEYS;
         if (tokenType.equals(McFunctionTypes.JSON))                                 return JSON_KEYS;

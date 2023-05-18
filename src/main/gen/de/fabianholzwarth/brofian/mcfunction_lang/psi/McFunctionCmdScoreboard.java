@@ -7,4 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdScoreboard extends PsiElement {
 
+  @Nullable
+  McFunctionCmdScoreboardObjectives getCmdScoreboardObjectives();
+
+  @Nullable
+  McFunctionCmdScoreboardPlayers getCmdScoreboardPlayers();
+
 }

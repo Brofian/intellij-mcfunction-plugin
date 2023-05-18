@@ -7,7 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface McFunctionCmdMsg extends PsiElement {
 
-  @NotNull
+  @Nullable
+  McFunctionFreeMessageValues getFreeMessageValues();
+
+  @Nullable
   McFunctionTargetSelector getTargetSelector();
 
 }

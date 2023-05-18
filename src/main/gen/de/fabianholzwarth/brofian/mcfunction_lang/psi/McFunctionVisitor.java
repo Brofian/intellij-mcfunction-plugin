@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class McFunctionVisitor extends PsiElementVisitor {
 
+  public void visitBoolValue(@NotNull McFunctionBoolValue o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdAdvancement(@NotNull McFunctionCmdAdvancement o) {
     visitPsiElement(o);
   }
@@ -64,6 +68,18 @@ public class McFunctionVisitor extends PsiElementVisitor {
   }
 
   public void visitCmdEnchant(@NotNull McFunctionCmdEnchant o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdExecute(@NotNull McFunctionCmdExecute o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdExecuteCondition(@NotNull McFunctionCmdExecuteCondition o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdExecuteModifier(@NotNull McFunctionCmdExecuteModifier o) {
     visitPsiElement(o);
   }
 
@@ -171,7 +187,151 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitCmdPlaySound(@NotNull McFunctionCmdPlaySound o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdPlaySoundSource(@NotNull McFunctionCmdPlaySoundSource o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdPublish(@NotNull McFunctionCmdPublish o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdRecipe(@NotNull McFunctionCmdRecipe o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdReload(@NotNull McFunctionCmdReload o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSaveAll(@NotNull McFunctionCmdSaveAll o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSaveOff(@NotNull McFunctionCmdSaveOff o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSaveOn(@NotNull McFunctionCmdSaveOn o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSay(@NotNull McFunctionCmdSay o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSchedule(@NotNull McFunctionCmdSchedule o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdScoreboard(@NotNull McFunctionCmdScoreboard o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdScoreboardObjectives(@NotNull McFunctionCmdScoreboardObjectives o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdScoreboardPlayers(@NotNull McFunctionCmdScoreboardPlayers o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSeed(@NotNull McFunctionCmdSeed o) {
+    visitPsiElement(o);
+  }
+
   public void visitCmdSetBlock(@NotNull McFunctionCmdSetBlock o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSetIdleTimeout(@NotNull McFunctionCmdSetIdleTimeout o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSetWorldSpawn(@NotNull McFunctionCmdSetWorldSpawn o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSpawnPoint(@NotNull McFunctionCmdSpawnPoint o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSpectate(@NotNull McFunctionCmdSpectate o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSpreadPlayers(@NotNull McFunctionCmdSpreadPlayers o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdStop(@NotNull McFunctionCmdStop o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdStopSound(@NotNull McFunctionCmdStopSound o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdSummon(@NotNull McFunctionCmdSummon o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTag(@NotNull McFunctionCmdTag o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTeam(@NotNull McFunctionCmdTeam o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTeamMsg(@NotNull McFunctionCmdTeamMsg o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTeamModOptions(@NotNull McFunctionCmdTeamModOptions o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTeleport(@NotNull McFunctionCmdTeleport o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTellRaw(@NotNull McFunctionCmdTellRaw o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTime(@NotNull McFunctionCmdTime o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTitle(@NotNull McFunctionCmdTitle o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdTrigger(@NotNull McFunctionCmdTrigger o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdWeather(@NotNull McFunctionCmdWeather o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdWhitelist(@NotNull McFunctionCmdWhitelist o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdWorldBorder(@NotNull McFunctionCmdWorldBorder o) {
+    visitPsiElement(o);
+  }
+
+  public void visitComponentValue(@NotNull McFunctionComponentValue o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCoordinateDouble(@NotNull McFunctionCoordinateDouble o) {
     visitPsiElement(o);
   }
 
@@ -179,7 +339,19 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDataType(@NotNull McFunctionDataType o) {
+    visitPsiElement(o);
+  }
+
+  public void visitDefaultDimensionIdentifiers(@NotNull McFunctionDefaultDimensionIdentifiers o) {
+    visitPsiElement(o);
+  }
+
   public void visitExtendedIdentifier(@NotNull McFunctionExtendedIdentifier o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFreeMessageValues(@NotNull McFunctionFreeMessageValues o) {
     visitPsiElement(o);
   }
 
@@ -199,7 +371,7 @@ public class McFunctionVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitUnused(@NotNull McFunctionUnused o) {
+  public void visitTimeValue(@NotNull McFunctionTimeValue o) {
     visitPsiElement(o);
   }
 
