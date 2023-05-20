@@ -3,19 +3,25 @@
     <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
     <id>de.fabianholzwarth.brofian.mcfunction_lang</id>
 
+    <version>1.0.0</version>
+
     <!-- Public plugin name should be written in Title Case.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
-    <name>Mcfunction_lang</name>
+    <name>McFunction Syntax Highlight</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="info@fabianholzwarth.de" url="https://fabianholzwarth.de">Fabian Holzwarth</vendor>
 
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+    This Plugin adds Syntax Highlighting support for mcfunction (Minecraft command) files in the IntelliJ IDE.<br>
+    <em>The currently supported Minecraft Version is 1.19.4</em><br>
+    Because this is a hobby project, I am doing this in my free time. So there won't be regularly updates. But please feel free to
+    open an issue or even a PullRequest on the GitHub repository if you encounter any bugs or problems.<br>
+    <br>
+    At the moment, only syntax highlighting and syntax errors are supported. Features like autocomplete are planned, but currently not available.
   ]]></description>
 
     <!-- Product and plugin compatibility requirements.

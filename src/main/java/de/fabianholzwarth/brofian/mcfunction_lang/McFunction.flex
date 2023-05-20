@@ -22,7 +22,7 @@ END_OF_LINE_COMMENT=("#")[^\r\n]*
 
 STRING=\"(.*)\"
 JSON=\{(.*)\}|\[(.*)\]
-TIME=-?\d+(d|s|t)
+TIME=-?\d+[dst]
 INT_RANGE=(\d+\.\.)|(\d+\.\.\d+)|(\.\.\d+)
 NUMBER=-?\d+(\.\d+)?
 SWIZZLE=(x((yz?)?|(zy?)?)) | (y((xz?)?|(zx?)?)) | (z((xy?)?|(yx?)?)) // any subset of {x,y,z} in any order
